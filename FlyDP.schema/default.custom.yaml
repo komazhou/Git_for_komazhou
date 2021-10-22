@@ -1,0 +1,35 @@
+# default.custom.yaml
+
+patch:
+  schema_list:
+    - schema: FlyDP # 小鹤双拼+形辅
+  "menu/page_size": 5
+  switcher:
+    #abbreviate_options: true #是否压缩选项
+    caption: "〔方案选择〕"
+    #fold_options: true #是否开启二级选项
+    hotkeys:
+      #- "Control+grave"
+      #- "Control+Shift+grave"
+      #- F4
+      - Control+Shift+F4
+  ascii_composer: # 设置caps、shift、control等键的作用
+    good_old_caps_lock: true # 若为true，caps只切换大小写
+    switch_key:
+      Shift_L: commit_code   # 左 Shift 切换直接上屏字母
+      Shift_R: commit_code   # 右 Shift 切换直接上屏字母
+      Control_L: noop
+      Control_R: noop
+      Caps_Lock: commit_code
+      Eisu_toggle: clear
+# 可選的臨時切換策略有三：
+# inline_ascii 在輸入法的臨時西文編輯區內輸入字母、數字、符號、空格等，回車上屏後自動復位到中文
+# commit_text 已輸入的候選文字上屏並切換至西文輸入模式
+# commit_code 已輸入的編碼字符上屏並切換至西文輸入模式
+# 設爲 noop，屏蔽該切換鍵
+  recognizer/patterns:
+    email: "^[A-Za-z][-_.0-9A-Za-z]*@.*$"
+    uppercase: "[A-Z][-_+.'0-9A-Za-z]*$"
+    url: "^(www[.]|https?:|ftp[.:]|mailto:|file:).*$|^[a-z]+[.].+$"
+    reverse_lookup: "U[a-z]*'?$"
+

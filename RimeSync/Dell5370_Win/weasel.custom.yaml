@@ -1,0 +1,147 @@
+# weasel.custom.yaml
+customization:
+  distribution_code_name: Weasel
+  distribution_version: 0.14.3
+  generator: "Weasel::UIStyleSettings"
+  modified_time: "Mon Oct 12 13:14:35 2020"
+  rime_version: 1.5.3
+patch:
+  # 以下软件默认英文模式
+  "app_options/Gvim.exe":
+    ascii_mode: true
+  "app_options/tcmatch64.exe":
+    ascii_mode: true
+  "app_options/totalcmd64.exe":
+    ascii_mode: true
+  "app_options/findandrunrobot.exe":
+    ascii_mode: true
+  "app_options/mathtype.exe":
+    ascii_mode: true
+  "app_options/acad.exe":
+    ascii_mode: true
+  "app_options/i_view64.exe":
+    ascii_mode: true
+  "app_options/i_view32.exe":
+    ascii_mode: true
+  "app_options/putty.exe":
+    ascii_mode: true
+
+#采用如下层级展开方式，就需要对下级所有对象进行补丁设置，否则会直接丢失相应设置
+#  style:
+#    color_scheme: Pron          # 设定配色方案的名称
+#    font_face: "微软雅黑"       # 设定配色方案的字体；可用"黑体"，默认为"Microsoft YaHei"
+#    font_point: 12              # 设定配色方案的字体大小，默认14
+#    horizontal: false           # 候选窗是否横排，true横排，false竖排，默认false
+#    fullscreen: false           # 全屏输入，即候选窗口占满整个屏幕，默认false
+#    inline_preedit: false        # TSF嵌入模式，正在输入的编码将嵌入到光标焦点处（仅支持TSF），默认false
+#    #preedit_type: composition   # 编码显示类型，preview为显示字，composition为显示字母（默认）
+#    display_tray_icon: false    # 显示托盘图标，开启（true）；关闭（false），默认false
+#    label_format: "%s."         # 候选字前面的编号，默认"%s."
+#    layout: 
+#      border_width: 0           # 候选窗口的外层边框宽度，默认3
+#      candidate_spacing: 12     # 候选字行间隔，默认5
+#      hilite_padding: 8         # 候选框首选字背景色色块高度，默认2，若想候选字背景色块无边界填充候选框，仅需其高度和候选字上下边距一致即可
+#      hilite_spacing: 3         # 序号和候选字之间的间隔，默认4
+#      margin_x: 8               # 候选字左右边距，默认12
+#      margin_y: 8               # 候选字上下边距，默认12
+#      min_heigh: 0               # 默认0
+#      min_width: 160            # 候选窗口的最小高与宽，默认160
+#      round_corner: 5           # 候选字背景色块圆角幅度，默认4
+#      spacing: 10               # 当候选窗口是非TSF（编码）嵌入（光标）模式时，编码与候选遮罩色块之间的距离，默认10
+
+# 采用下方的斜杠的添加方式可以对指定对象打补丁，
+# 双引号、单引号和不加引号的效果一样，建议使用双引号
+  "style/font_point": 12
+  "style/inline_preedit": true
+  "style/color_scheme": Pron
+
+#自定义配色
+  "preset_color_schemes/Pron":
+    name: Pron
+    author: 周庸生
+    back_color: 0x000000
+    border_color: 0x000000
+    text_color: 0xffffff
+    hilited_text_color: 0x000000
+    hilited_back_color: 0x009bff
+    hilited_candidate_text_color: 0x000000
+    hilited_candidate_back_color: 0x009bff
+    candidate_text_color: 0xffffff
+    comment_text_color: 0xffffff
+    label_color: 0xffffff
+    hilited_lable_color: 0x000000
+    hilited_comment_text_color: 0x000000
+
+  "preset_color_schemes/Wii2":
+    name: Wii2
+    author: PYatoo
+    back_color: 0xefefef
+    border_color: 0xefefef
+    text_color: 0x575759
+    hilited_text_color: 0xED9564
+    hilited_back_color: 0xefefef
+    hilited_candidate_text_color: 0xffffff
+    hilited_candidate_back_color: 0xED9564
+    candidate_text_color: 0x575759
+    comment_text_color: 0xcac9c8
+    hilited_comment_text_color: 0xffffff
+    label_color: 0xcac9c8
+
+  "preset_color_schemes/Micosoft":
+    name: "Micosoft" # 配色方案名称
+    author: "XNOM" # 配色方案作者
+    back_color: 0xffffff # 候选框背景色
+    border_color: 0xD77800 # 候选框边框颜色
+    text_color: 0x000000 # 已选择字文字颜色
+    hilited_text_color: 0x000000 # 已选择字右侧拼音文字颜色
+    hilited_back_color: 0xffffff # 已选择字右侧拼音背景色
+    hilited_candidate_text_color: 0xffffff # 候选字颜色
+    hilited_candidate_back_color: 0xD77800 # 候选字背景色
+    candidate_text_color: 0x000000 # 未候选字颜色
+    
+  "preset_color_schemes/nba":
+    name: "NBA"
+    author: "Patricivs <ipatrickmac@me.com>"
+    back_color: 0xb76a00
+    border_color: 0xb76a00
+    text_color: 0xffffff
+    hilited_text_color: 0x541ed7
+    hilited_back_color: 0xffffff
+    hilited_candidate_text_color: 0xffffff
+    hilited_candidate_back_color: 0x541ed7
+    candidate_text_color: 0xffffff
+    label_color: 0xffffff # 预选栏编号颜色
+    comment_text_color: 0xffffff  # 拼音等提示文字颜色
+    hilited_comment_text_color: 0xffffff # 注解文字高亮
+
+  "preset_color_schemes/Mxy":
+    name: 兴宇／Mxy
+    author: Mxy
+    # 編碼行文字顏色，24位色值，用十六進制書寫方便些，順序是藍綠紅0xBBGGRR
+    text_color: 0x000000
+    # 候選項文字顏色，當與文字顏色不同時指定
+    #candidate_text_color
+    # 底色
+    back_color: 0xFCFCFC
+    # 邊框顏色，與底色相同則爲無邊框的效果
+    border_color: 0xFCFCFC
+    # 高亮文字，即與當前高亮候選對應的那部份輸入碼
+    #hilited_text_color: 0xfecb96
+    # 設定高亮文字的底色，可起到凸顯高亮部份的作用
+    #hilited_back_color: 0x000000
+    # 高亮候選項的文字顏色，要醒目！
+    hilited_candidate_text_color: 0xFFFFFF
+    # 高亮候選項的底色，若與背景色不同就會顯出光棒
+    hilited_candidate_back_color: 0xED9564
+
+  "preset_color_schemes/momo":  # 配色方案列表加入名字momo的配色方案
+    name: 默默／Momo
+    author: Momo
+    text_color: 0x000000             # 編碼行文字顏色，24位色值，用十六進制書寫方便些，順序是藍綠紅0xBBGGRR
+    candidate_text_color: 0x000000   # 候選項文字顏色，當與文字顏色不同時指定
+    back_color: 0xFFFFFF             # 底色
+    border_color: 0xFFFFFF          # 邊框顏色，與底色相同則爲無邊框的效果
+    hilited_text_color: 0x000000     # 高亮文字，即與當前高亮候選對應的那部份輸入碼
+    hilited_back_color: 0xFFFFFF     # 設定高亮文字的底色，可起到凸顯高亮部份的作用
+    hilited_candidate_text_color: 0xEE6E00  # 高亮候選項的文字顏色，要醒目！
+    hilited_candidate_back_color: 0xFFFFFF  # 高亮候選項的底色，若與背景色不同就會顯出光棒

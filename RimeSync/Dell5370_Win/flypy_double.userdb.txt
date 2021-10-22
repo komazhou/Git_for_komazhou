@@ -1,0 +1,34 @@
+# Rime user dictionary
+#@/db_name	flypy_double.userdb
+#@/db_type	userdb
+#@/rime_version	1.5.3
+#@/tick	25
+#@/user_id	Dell5370_Win
+bi jn 	比较	c=0 d=0.0955997 t=25
+biuo 	臂	c=0 d=0.0985112 t=25
+bu co 	不错	c=1 d=0.946485 t=25
+de 	的	c=1 d=0.951229 t=25
+gs ye 	工业	c=2 d=1.96561 t=25
+ha 	哈	c=1 d=0.955997 t=25
+ha ha 	哈哈	c=1 d=0.937067 t=25
+hc 	好	c=0 d=0.0955997 t=25
+hd ui 	还是	c=1 d=0.941765 t=25
+il kz 	窗口	c=1 d=0.932394 t=25
+ji qi 	机器	c=0 d=0.0965605 t=25
+ji qi rf 	机器人	c=1 d=0.970446 t=25
+rf 	人	c=0 d=0.0965605 t=25
+ts bu 	同步	c=1 d=0.97531 t=25
+uf me 	什么	c=1 d=0.927743 t=25
+uu ru fa 	输入法	c=0 d=0.0955997 t=25
+ve ge 	这个	c=0 d=0.0955997 t=25
+ve ge uu ru fa ye ui bi jn hc 	这个输入法也是比较好	c=1 d=0.960789 t=25
+vl xp 	装卸	c=2 d=2.07863 t=25
+vl xp biuo 	装卸臂	c=1 d=0.99005 t=25
+wwa uzv 	未收	c=3 d=2.95536 t=25
+ye ui 	也是	c=0 d=0.0955997 t=25
+yiv 	已	c=1 d=0.995012 t=25
+yiv uzvw 	已收	c=1 d=1 t=25
+ys 	用	c=2 d=1.95551 t=25
+ys hu 	拥护	c=-1 d=0.960789 t=25
+ys hu 	用户	c=1 d=0.965605 t=25
+zi ln 	资料	c=1 d=0.970446 t=25

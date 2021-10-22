@@ -1,0 +1,62 @@
+# Rime user dictionary
+#@/db_name	luna_pinyin.userdb
+#@/db_type	userdb
+#@/rime_version	1.5.3
+#@/tick	82
+#@/user_id	Dell5370_Win
+ben 	本	c=1 d=0.904837 t=82
+bu fen 	部分	c=1 d=0.860708 t=82
+ce shi 	測試	c=1 d=0.677057 t=82
+chun 	純	c=2 d=1.4636 t=82
+ci ku 	詞庫	c=1 d=0.955997 t=82
+cong 	從	c=1 d=0.680451 t=82
+de 	的	c=4 d=3.23206 t=82
+di fang 	地方	c=1 d=0.822835 t=82
+er lai 	而來	c=1 d=0.71177 t=82
+fan yi 	翻譯	c=1 d=0.802519 t=82
+fang an 	方案	c=4 d=3.096 t=82
+fu hao 	符號	c=1 d=0.951229 t=82
+fu zhi 	複製	c=2 d=1.3819 t=82
+fu zhu 	輔助	c=1 d=0.778801 t=82
+he 	和	c=1 d=0.794534 t=82
+he 	鶴	c=4 d=3.16146 t=82
+ji chu 	基礎	c=1 d=0.763379 t=82
+ji yu 	基於	c=1 d=0.683861 t=82
+jian yi 	建議	c=2 d=1.93124 t=82
+kai qi 	開啓	c=2 d=1.94092 t=82
+lai 	來	c=1 d=0.847894 t=82
+li yong 	利用	c=1 d=0.826959 t=82
+ling dao 	領導	c=1 d=0.831104 t=82
+mo hu 	模糊	c=1 d=0.839457 t=82
+pi pei 	匹配	c=1 d=0.843665 t=82
+pin yin 	拼音	c=2 d=1.4393 t=82
+qi 	器	c=1 d=0.810584 t=82
+qi 	起	c=1 d=0.806541 t=82
+ri qi 	日期	c=1 d=0.786628 t=82
+shang 	上	c=1 d=0.767206 t=82
+shen me 	什麼	c=2 d=1.99501 t=82
+shi 	是	c=1 d=0.923116 t=82
+shi jian 	時間	c=1 d=0.798516 t=82
+shu ru fa 	輸入法	c=2 d=1.93181 t=82
+shuang pin 	雙拼	c=4 d=3.1053 t=82
+tian jia 	添加	c=1 d=0.771052 t=82
+wei 	爲	c=1 d=0.873716 t=82
+xian zai 	現在	c=1 d=0.980199 t=82
+xiao 	小	c=3 d=2.35906 t=82
+xing ma 	形碼	c=1 d=0.862726 t=82
+xing ma zhong dian 	形碼重點	c=1 d=0.882497 t=82
+xiu gai 	修改	c=2 d=1.67515 t=82
+yang 	樣	c=1 d=1 t=82
+yi shang 	以上	c=1 d=0.878095 t=82
+yi xia 	以下	c=1 d=0.869358 t=82
+yi xie 	一些	c=1 d=0.865022 t=82
+you zhu yu 	有助於	c=1 d=0.895834 t=82
+yuan 	原	c=2 d=1.45237 t=82
+zai 	在	c=2 d=1.63011 t=82
+zen me 	怎麼	c=1 d=0.995012 t=82
+zeng jia 	增加	c=1 d=0.782705 t=82
+zhe ge 	這個	c=2 d=1.90362 t=82
+zhi ding 	指定	c=1 d=0.88692 t=82
+zhong 	中	c=1 d=0.913931 t=82
+zhong dian 	重點	c=2 d=1.7546 t=82
+zi dian 	字典	c=1 d=0.891366 t=82

@@ -1,0 +1,73 @@
+# default.custom.yaml
+# yaml语法中，以 - 开头的行表示构成一个数组
+# minus/减号，equal/等号，comma/逗号，period/句号，exclam/感叹号，numbersign/井号，percent/百分号，semicolon/分号，apostrophe/单引号,brcketleft/左中括号,bracketright/右中括号
+patch:
+  schema_list:
+    - schema: FlyDP # 小鹤双拼+形辅
+    - schema: flypy_double #小鹤双拼双形简
+
+  switcher:
+    caption: 〔方案選單〕
+    hotkeys:
+      - Control+Shift+F4
+      - Control+Shift+grave
+    save_options:
+      - full_shape
+      - ascii_punct
+      - simplification
+      - extended_charset
+    fold_options: true
+    abbreviate_options: true
+    option_list_separator: '／'
+
+  menu:
+    page_size: 5   #候选词数量
+
+  key_binder:
+    bindings:
+      #- {accept: semicolon, send: 2, when: has_menu} #只要有“候选字”时，分号/冒号选中第2个候选字发送
+      #- {accept: apostrophe, send: 3, when: has_menu} #只要有“候选字”时，引号选中第3个候选字发送
+      - {accept: equal, send: Page_Down, when: has_menu} #when: has_menu  表示只要有“候选字”时，即满足条件按“等号”向下翻页
+      - {accept: minus, send: Page_Up, when: paging} #when: paging 表示仅当“候选字”已发生向后翻页的时候，按“减号”向前翻页
+      - {accept: period, send: Page_Down, when: has_menu} #按“句号”向下翻页
+      - {accept: comma, send: Page_Up, when: paging} #按“逗号”向上翻页
+      - {accept: bracketright, send: Page_Down, when: has_menu} #按右方括号键“】”向下翻页
+      - {accept: bracketleft, send: Page_Up, when: paging} #按左方括号键“【”向上翻页
+      - {accept: "Control+Shift+t", toggle: zh_simp_s2t, when: always}  #when: always表示在任何时候按Ctrl+Shift+T切换繁体和简体
+      - {accept: Tab, send: Right, when: composing} #when: composing 表示在编码中生效，表示按“Tab”键发送“右方向键”
+      - {accept: "Control+Shift+1", select: .next, when: always}
+      - {accept: "Control+Shift+exclam", select: .next, when: always}
+      - {accept: "Control+Shift+3", toggle: emoji_suggestion, when: always}
+      - {accept: "Control+Shift+numbersign", toggle: emoji_suggestion, when: always}
+      - {accept: "Control+Shift+4", toggle: symbol_support, when: always}
+      - {accept: "Control+Shift+dollar", toggle: symbol_support, when: always}
+      - {accept: "Control+Shift+5", toggle: ascii_punct, when: always}
+      - {accept: "Control+Shift+percent", toggle: ascii_punct, when: always}
+      - {accept: "Control+Shift+6", toggle: full_shape, when: always}
+      - {accept: "Control+Shift+asciicircum", toggle: full_shape, when: always}
+      - {accept: "Shift+space", toggle: full_shape, when: always}
+      - {accept: "Control+comma", toggle: ascii_punct, when: always}
+      - {accept: "Control+period", toggle: ascii_punct, when: always}
+      - {accept: "Control+space", toggle: ascii_mode, when: always} #“ascii_mode”为“字符模式”，本条表示中英文切换快捷键
+      #- {accept: KP_Enter, send: Return, when: has_menu}
+
+  recognizer/patterns:
+    email: "^[A-Za-z][-_.0-9A-Za-z]*@.*$"
+    uppercase: "[A-Z][-_+.'0-9A-Za-z]*$"
+    url: "^(www[.]|https?:|ftp[.:]|mailto:|file:).*$|^[a-z]+[.].+$"
+    reverse_lookup: "U[a-z]*'?$"
+
+  ascii_composer: # 设置caps、shift、control等键的作用
+    good_old_caps_lock: true # 若为true，caps只切换大小写
+    switch_key:
+      Shift_L: commit_text   # 左 Shift 切换直接上屏字母
+      Shift_R: commit_text   # 右 Shift 切换直接上屏字母
+      Control_L: noop
+      Control_R: noop
+      Caps_Lock: commit_text
+      Eisu_toggle: clear
+# 可選的臨時切換策略有三：
+# inline_ascii 在輸入法的臨時西文編輯區內輸入字母、數字、符號、空格等，回車上屏後自動復位到中文
+# commit_text 已輸入的候選文字上屏並切換至西文輸入模式
+# commit_code 已輸入的編碼字符上屏並切換至西文輸入模式
+# 設爲 noop，屏蔽該切換鍵

@@ -1,0 +1,29 @@
+# default.custom.yaml
+# 基础引擎框架配置，patch 会更新 default.yaml 文件
+# yaml语法中，以 - 开头的行表示构成一个数组
+# minus/减号，equal/等号，comma/逗号，period/句号，exclam/感叹号，numbersign/井号，percent/百分号，semicolon/分号，apostrophe/单引号,brcketleft/左中括号,bracketright/右中括号
+patch:
+  schema_list:
+    - schema: FlyDP # 小鹤双拼+形辅
+
+  switcher/hotkeys:
+    # 切换选项菜单的快捷键
+    - Control+Shift+F4
+    - Control+Shift+grave
+
+  menu/page_size: 5   #候选词数量
+
+  ascii_composer: # 设置caps、shift、control等键的作用
+    good_old_caps_lock: true # 若为true，caps只切换大小写
+    switch_key:
+      Shift_L: commit_text   # 左 Shift 切换直接上屏字母
+      Shift_R: commit_text   # 右 Shift 切换直接上屏字母
+      Control_L: noop
+      Control_R: noop
+      Caps_Lock: commit_text
+      Eisu_toggle: clear
+# 可選的臨時切換策略有三：
+# inline_ascii 在輸入法的臨時西文編輯區內輸入字母、數字、符號、空格等，回車上屏後自動復位到中文
+# commit_text 已輸入的候選文字上屏並切換至西文輸入模式
+# commit_code 已輸入的編碼字符上屏並切換至西文輸入模式
+# 設爲 noop，屏蔽該切換鍵

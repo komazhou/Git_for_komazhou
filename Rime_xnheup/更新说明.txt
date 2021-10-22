@@ -1,0 +1,20 @@
+2020-09-02 修改说明
+增加rime.lua用于输入日期和时间；
+并在double_pinyin_flypy.custom.yaml中增加如下代码：
+  engine/translators:
+      - punct_translator
+      - reverse_lookup_translator
+      - script_translator
+      - lua_translator@date_translator ；这部分代码用于翻译Lua脚本，实现日期和时间功能
+2020年09月02日增加如下修改：
+增加rime.lua中日期和时间的格式种类
+注释掉表情词库
+  #- luna_pinyin.emoji
+  #- luna_pinyin.emoji.cldr
+  #- luna_pinyin.emoji.scomper
+
+下一步需要优化的内容：
+sort: 詞條初始排序方式，可選填 by_weight（按詞頻高低排序）或 original（保持原碼表中的順序）；
+use_preset_vocabulary: 填 true 或 false，選擇是否導入預設詞彙表【八股文】。
+sort: original 選項按詞條在詞典中出現的順序排列。這樣連詞頻都不需要了
+调整单字的顺序，使高频字能够更靠前

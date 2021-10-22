@@ -1,0 +1,248 @@
+patch:
+  style:
+    candidate_font_size: 20 #修改栏字体大小
+    inline_preedited_text_font_size: 40
+    common_preedited_text_font_size: 14
+    numberboard_font_size: 24 #数字键盘字体大小
+    candidate_height_font_color: '020202'
+    candidate_font_color: '0x020202'
+  app_setting:
+    candidate_tool_bar_is_show_emoji: 1 #显示emoji表情
+    candidate_tool_bar_is_show_schema_switcher: 1 #显示切换方案
+    candidate_tool_bar_is_show_pasteboard: 1 #显示剪贴板历史
+    candidate_preedit_type: 3 #候择栏栏输入符号样式，1为正常上下结构，2为内嵌，3为上下结构去掉横线
+    current_chinese_type: 0 #是否繁体输出
+    display_upper_text: true #是否显示上滑符
+    impact_feedback: false #键盘震动反馈。
+    impact_feedback_style: UIImpactFeedbackStyleLight #UIImpactFeedbackStyleLight 轻   UIImpactFeedbackStyleMedium 中   UIImpactFeedbackStyleHeavy 高
+    is_autom_fill_symbol: false #是否输入（ “ 等符号自动补全
+    is_custom_key_font: true #键盘字体是否自定义
+    is_open_host_app: false #是否点击键盘图标打开主程序
+    is_insert_symbol_auto_insert_candiate: true #是否输入符号时自动上屏
+    is_hide_mode_change: true #是否隐藏地球
+    is_open_word_association: false #打开联想词
+    is_show_candidate_comment: false
+    is_show_select_input_icon: true #是否显示切换方案图标
+    is_show_pop: true #是否显示字符预览
+    is_text_replacement_on: false #是否启用系统文本替换
+    keyboard_type: 0 #键盘类型：0 #为默认键盘，1为27键盘
+    monitor_paste: 1 #候选栏显示剪贴板内容
+    play_key_voice: false #开关键盘音
+    play_key_voice_volume: 0.3
+    play_key_voice_name: default.caf
+    portrait_keyboard_height_offset: 0 #坚屏键盘调试。最大增加40像素；
+    swipe_upper_to_rime: true #上滑是否交到rime,如果打开，只接受ASCII码。其它直接上屏
+    space_swipe_to_move: true #开启空格键盘移动光标
+  preset_keyboards:
+    default:
+      name: 26鍵
+      author: flypy.com
+      keys:
+      - q:
+          swipe_down_label: 一
+          upper_label: Q
+          swipe_down: 一
+          lower_label: q
+          click: q
+          swipe_up: '1'
+          swipe_up_label: '1'
+      - w:
+          swipe_down_label: 二
+          upper_label: W
+          swipe_down: 二
+          lower_label: w
+          click: w
+          swipe_up: '2'
+          swipe_up_label: '2'
+      - e:
+          swipe_down_label: 三
+          upper_label: E
+          swipe_down: 三
+          lower_label: e
+          click: e
+          swipe_up: '3'
+          swipe_up_label: '3'
+      - r:
+          swipe_down_label: 四
+          upper_label: R
+          swipe_down: 四
+          lower_label: r
+          click: r
+          swipe_up: '4'
+          swipe_up_label: '4'
+      - t:
+          swipe_down_label: 五
+          upper_label: T
+          swipe_down: 五
+          lower_label: t
+          click: t
+          swipe_up: '5'
+          swipe_up_label: '5'
+      - 'y':
+          swipe_down_label: 六
+          upper_label: 'Y'
+          swipe_down: 六
+          lower_label: 'y'
+          click: 'y'
+          swipe_up: '6'
+          swipe_up_label: '6'
+      - u:
+          swipe_down_label: 七
+          upper_label: U
+          swipe_down: 七
+          lower_label: u
+          click: u
+          swipe_up: '7'
+          swipe_up_label: '7'
+      - i:
+          swipe_down_label: 八
+          upper_label: I
+          swipe_down: 八
+          lower_label: i
+          click: i
+          swipe_up: '8'
+          swipe_up_label: '8'
+      - o:
+          swipe_down_label: 九
+          upper_label: O
+          swipe_down: 九
+          lower_label: o
+          click: o
+          swipe_up: '9'
+          swipe_up_label: '9'
+      - p:
+          swipe_down_label: 〇
+          upper_label: P
+          swipe_down: 〇
+          lower_label: p
+          click: p
+          swipe_up: '0'
+          swipe_up_label: '0'
+      - a:
+          swipe_down_label: '!'
+          upper_label: A
+          swipe_down: '!'
+          lower_label: a
+          click: a
+          swipe_up: ！
+          swipe_up_label: ！
+      - s:
+          swipe_down_label: ^
+          upper_label: S
+          swipe_down: ^
+          lower_label: s
+          click: s
+          swipe_up: ……
+          swipe_up_label: ……
+      - d:
+          swipe_down_label: \
+          upper_label: D
+          swipe_down: \
+          lower_label: d
+          click: d
+          swipe_up: 、
+          swipe_up_label: 、
+      - f:
+          swipe_down_label: ;
+          upper_label: F
+          swipe_down: ;
+          lower_label: f
+          click: f
+          swipe_up: ；
+          swipe_up_label: ；
+      - g:
+          swipe_down_label: (
+          upper_label: G
+          swipe_down: (
+          lower_label: g
+          click: g
+          swipe_up: （
+          swipe_up_label: （
+      - h:
+          swipe_down_label: )
+          upper_label: H
+          swipe_down: )
+          lower_label: h
+          click: h
+          swipe_up: ）
+          swipe_up_label: ）
+      - j:
+          swipe_down_label: '#'
+          upper_label: J
+          swipe_down: '#'
+          lower_label: j
+          click: j
+          swipe_up: '#'
+          swipe_up_label: '#'
+      - k:
+          swipe_down_label: '"'
+          upper_label: K
+          swipe_down: '"'
+          lower_label: k
+          click: k
+          swipe_up: “
+          swipe_up_label: “
+      - l:
+          swipe_down_label: "'"
+          upper_label: L
+          swipe_down: "'"
+          lower_label: l
+          click: l
+          swipe_up: ”
+          swipe_up_label: ”
+      - z:
+          swipe_down_label: '`'
+          upper_label: Z
+          swipe_down: '`'
+          lower_label: z
+          click: z
+          swipe_up: '`'
+          swipe_up_label: '`'
+      - x:
+          swipe_down_label: '?'
+          upper_label: X
+          swipe_down: '?'
+          lower_label: x
+          click: x
+          swipe_up: ？
+          swipe_up_label: ？
+      - c:
+          swipe_down_label: ','
+          upper_label: C
+          swipe_down: ','
+          lower_label: c
+          click: c
+          swipe_up: ，
+          swipe_up_label: ，
+      - v:
+          swipe_down_label: '.'
+          upper_label: V
+          swipe_down: '.'
+          lower_label: v
+          click: v
+          swipe_up: 。
+          swipe_up_label: 。
+      - b:
+          swipe_down_label: '%'
+          upper_label: B
+          swipe_down: '%'
+          lower_label: b
+          click: b
+          swipe_up: '@'
+          swipe_up_label: '@'
+      - 'n':
+          swipe_down_label: '/'
+          upper_label: 'N'
+          swipe_down: '/'
+          lower_label: 'n'
+          click: 'n'
+          swipe_up: /
+          swipe_up_label: /
+      - m:
+          swipe_down_label: ':'
+          upper_label: M
+          swipe_down: ':'
+          lower_label: m
+          click: m
+          swipe_up: ：
+          swipe_up_label: ：

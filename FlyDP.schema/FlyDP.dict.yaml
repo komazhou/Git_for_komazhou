@@ -1,0 +1,40 @@
+# Rime dictionary
+# encoding: utf-8
+# import_tables 导入表里的每一项。
+# clover.base 这是单字的字库，包含所有字的拼音、字频，对应文件 clover.base.dict.yaml
+# clover.phrase 这是词组的词库，包含所有基本词汇的拼音、词频，对应文件 clover.phrase.dict.yaml
+# THUOCL_* 这是清华大学开源词库，对应文件 THUOCL_*.dict.yaml
+# sogou_new_words 这是每周更新的搜狗网络流行新词，对应文件 sogou_new_words.dict.yaml
+# 导入的词库的 import_tables 项是无效的（也就是不能嵌套）
+# 导入的词库的 name 字段必须和文件名一致，后缀为 .dict.yaml
+#小鹤双拼的单字词库，同时利用小鹤纯双拼规则匹配［八股文］来实现单字
+#2020年09月05日修订 为避免一码单字干扰组词，将一码单字全部修改为二码；不删除二码单字主要是为了避免常用单字的缺失。
+---
+name: FlyDP
+version: "1"
+sort: by_weight
+# use_preset_vocabulary: false #填 true 或 false，選擇是否導入預設詞彙表【八股文】。
+# sort: by_weight
+# use_preset_vocabulary: false/true
+
+import_tables:
+  - clover.base # clover.base 是不可以删除的，否则会失去所有文字的拼音导致导入任何词库都无效。
+  - clover.phrase
+  - THUOCL_animal
+  - THUOCL_caijing
+  - THUOCL_car
+  - THUOCL_chengyu
+  - THUOCL_diming
+  - THUOCL_food
+  - THUOCL_IT
+  - THUOCL_law
+  - THUOCL_lishimingren
+  - THUOCL_medical
+  - THUOCL_poem
+  - sogou_new_words
+  - FlyDP.Symbol #这个是小鹤双拼的特殊字符码表
+  - FlyDP.User #这个是个人特殊词库
+  - FlyDP.Patent #专利词库
+  - Changyongci
+  - Chengyusuyu
+  

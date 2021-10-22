@@ -1,0 +1,26 @@
+# Rime schema
+# encoding: utf-8
+
+patch:
+  schema:
+    schema_id: luna_pinyin
+    name: 朙月拼音
+    version: "0.24"
+    author:
+      - 佛振 <chen.sst@gmail.com>
+    description: |
+      Rime 預設的拼音輸入方案。
+      參考以下作品而創作：
+        * CC-CEDICT
+        * Android open source project
+        * Chewing - 新酷音
+        * opencc - 開放中文轉換
+    dependencies:
+      - stroke
+
+  translator:
+    dictionary: luna_pinyin.custom
+    preedit_format:
+      - xform/([nl])v/$1ü/
+      - xform/([nl])ue/$1üe/
+      - xform/([jqxy])v/$1u/

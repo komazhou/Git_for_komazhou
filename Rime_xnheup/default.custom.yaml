@@ -1,0 +1,41 @@
+# default.custom.yaml
+
+patch:
+  schema_list:
+    - schema: luna_pinyin
+    - schema: double_pinyin_xnhedn # 小鹤双拼+辅助码
+    - {schema: flypy}
+
+  switcher:
+    #abbreviate_options: true #是否压缩选项
+    caption: "〔方案选择〕"
+    #fold_options: true #是否开启二级选项
+    hotkeys:
+      #- "Control+grave"
+      #- "Control+Shift+grave"
+      #- F4
+      - Control+Shift+F4
+  ascii_composer: # 设置caps、shift、control等键的作用
+    good_old_caps_lock: true # 若为true，caps只切换大小写
+    switch_key:
+      Shift_L: commit_code
+      Shift_R: commit_code
+      Control_L: noop
+      Control_R: noop
+      Caps_Lock: commit_code
+      Eisu_toggle: clear
+  recognizer/patterns:
+    email: "^[A-Za-z][-_.0-9A-Za-z]*@.*$"
+    uppercase: "[A-Z][-_+.'0-9A-Za-z]*$"
+    url: "^(www[.]|https?:|ftp[.:]|mailto:|file:).*$|^[a-z]+[.].+$"
+  menu/page_size: 5
+  key_binder/bindings: # 设置哪些键可以翻页，需要哪个取消注释即可
+    # - { when: composing, accept: Tab, send: Page_Up } # Tab 翻页
+    - { when: composing, accept: Tab, send: Right } #composing操作输入码用；这里通过Tab移动光标向右
+    # - { when: composing, accept: Shift+Tab, send: Page_Up } #Shift+Tab向前翻页
+    - { when: paging, accept: minus, send: Page_Up } #减号向前翻页
+    - { when: has_menu, accept: equal, send: Page_Down } #等号向后翻页
+    - { when: paging, accept: bracketleft, send: Page_Up } #[键向后翻页
+    - { when: has_menu, accept: bracketright, send: Page_Down } #]键向后翻页
+    - {accept: comma, send: Page_Up, when: paging} #paging翻页用；这里通过逗号向前翻页
+    - {accept: period, send: Page_Down, when: has_menu} #has_menu操作后选项用；这里通过句号向后翻页；这时句号无法顶字上屏，方便输入网址等使用。

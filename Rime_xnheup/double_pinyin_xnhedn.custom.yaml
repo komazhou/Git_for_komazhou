@@ -1,0 +1,134 @@
+﻿# Rime schema
+# encoding: utf-8
+#在原小鹤双拼(纯拼音方案)的基础上添加形码辅助
+patch:
+  schema:
+    schema_id: double_pinyin_xnhedn
+    name: 小鹤双拼+形辅
+    version: "0.10"
+    author:
+      - double pinyin layout by 鶴
+      - Rime schema by 佛振 <chen.sst@gmail.com>
+      - config by 周辉〈komazhou630@gmail.com>
+    description: |
+      朙月拼音＋小鶴雙拼+小鶴形码辅助方案。
+    dependencies:
+      - stroke
+  switches:
+    - name: ascii_mode
+      reset: 0 #默认中文编码
+      states: [ 中文, 西文 ]
+    - name: full_shape
+      states: [ 半角, 全角 ]
+    - name: simplification
+      reset: 1 #默认简体汉字
+      states: [ 漢字, 汉字 ]
+    - name: ascii_punct
+      states: [ 。，, ．， ]
+  engine/translators:
+      - punct_translator
+      - reverse_lookup_translator
+      - script_translator
+      - lua_translator@date_translator #增加日期和时间翻译器
+
+#重点修改地方，
+  speller:
+    alphabet: zyxwvutsrqponmlkjihgfedcba
+    delimiter: " '"
+    algebra:
+            #消除／Erasion : 若拼寫與<模式> 完 全 匹配，則將該拼寫從有效拼寫集合中消除。
+            #格式：erase/<模式>/
+            #實例：算式 erase/^.*\d$/  運算元 dang1  結果 帶聲調的拼音不再可用
+      - erase/^xx$/
+            #派生／Derivation : 若對拼寫做正則模式匹配、替換而獲得了新的拼寫，則有效拼寫集合同時包含派生前後的拼寫；否則僅保留原拼寫。
+            #格式：derive/<模式>/<替換式>/
+            #實例一：算式 derive/^([nl])ue$/$1ve/  運算元 nue  結果 nve
+            #效果：輸入nve或nue(lve或lue)均可獲得源碼表中與編碼nue(lue)對應的候選
+            #實例二：算式 derive/^[nl](.*)$/l$1/  運算元 na  結果 la
+            #效果：輸入la可獲得源碼表中與編碼na、la對應的候選；輸入na，候選仍爲碼表中編碼爲na的候選
+      #- derive/^([jqxy])u$/$1v/                 #派生：将输入ju和jv等效；将输入qu和qv等效；将输入xu和xv等效；将输入yu和yv等效，次出的u和v均对应拼音中的ü
+      #- derive/^([aoe])([ioun])$/$1$1$2/        #派生：将编码为ai\ao\au\an\oi\oo\ou\on\ei\eo\eu\en对应派生出aai\aao\aau\aan\ooi\ooo\oou\oon\eei\eeo\eeu\een的等效编码。
+            # 变形：變形／Transformation : 若拼寫（或其子串）與<模式>匹配，則將所匹配的部份改寫爲<替換式>；否則拼寫保持不變。模式、替換式遵循Perl正則表達式語法
+            # 格式：xform/<模式>/<替換式>/
+            # 實例：算式 xform/^([nl])ue$/$1ve/  運算元 nue  結果 nve
+            # 效果：輸入nve(lve)可以獲得源碼表中與編碼nue(lue)對應的候選；輸入nue(lue)無候選
+      - xform/^([aoe])(ng)?$/$1$1$2/            #变形：将编码为ang、ong和eng变形为aang、oong和eeng后便于双拼分割；
+      - xform/iu$/Q/                            #变形：将“iu”结尾的编码变形为大写“Q”结尾的编码；用于双拼韵母
+      - xform/(.)ei$/$1W/                       #变形：将“ei”结尾的编码变形为大写“W”结尾的编码；用于双拼韵母；同时排除编码为ei的字
+      - xform/uan$/R/                           #变形：将“uan”结尾的编码变形为大写“R”结尾的编码；用于双拼韵母
+      - xform/[uv]e$/T/                         #变形：将“ue”和“ve”结尾的编码变形为大写“T”结尾的编码；用于双拼韵母
+      - xform/un$/Y/                            #变形：将“un”结尾的编码变形为大写“Y”结尾的编码；用于双拼韵母
+      - xform/^sh/U/                            #变形：将双声母“sh”的编码变形为大写“U”；用于双拼的双声母
+      - xform/^ch/I/                            #变形：将双声母“ch”的编码变形为大写“I”；用于双拼的双声母
+      - xform/^zh/V/                            #变形：将双声母“zh”的编码变形为大写“V”；用于双拼的双声母
+      - xform/uo$/O/                            #变形：将uo”结尾的编码变形为大写“O”结尾的编码；用于双拼韵母
+      - xform/ie$/P/                            #变形：将“ie”结尾的编码变形为大写“P”结尾的编码；用于双拼韵母
+      - xform/i?ong$/S/                         #变形：将“iong”和“ong”结尾的编码变形为大写“S”结尾的编码；用于双拼韵母
+      - xform/ing$|uai$/K/                      #变形：将“ing”和“uai”结尾的编码变形为大写“K”结尾的编码；用于双拼韵母
+      - xform/(.)ai$/$1D/                       #变形：将“ai”结尾的编码变形为大写“D”结尾的编码；用于双拼韵母；同时排除编码为ai的字
+      - xform/(.)en$/$1F/                       #变形：将“en”结尾的编码变形为大写“F”结尾的编码；用于双拼韵母；同时排除编码为en的字
+      - xform/(.)eng$/$1G/                      #变形：将“eng”结尾的编码变形为大写“G”结尾的编码；用于双拼韵母；同时排除编码为eng的字
+      - xform/[iu]ang$/L/                       #变形：将“iang”和“uang”结尾的编码变形为大写“L”结尾的编码；用于双拼韵母
+      - xform/(.)ang$/$1H/                      #变形：将“ang”结尾的编码变形为大写“H”结尾的编码；用于双拼韵母；同时排除编码为ang的字
+      - xform/ian$/M/                           #变形：将“ian”结尾的编码变形为大写“M”结尾的编码；用于双拼韵母
+      - xform/(.)an$/$1J/                       #变形：将“an”结尾的编码变形为大写“J”结尾的编码；用于双拼韵母；同时排除编码为an的字
+      - xform/(.)ou$/$1Z/                       #变形：将“ou”结尾的编码变形为大写“Z”结尾的编码；用于双拼韵母；同时排除编码为ou的字
+      - xform/[iu]a$/X/                         #变形：将“ia”和“ua”结尾的编码变形为大写“X”结尾的编码；用于双拼韵母
+      - xform/iao$/N/                           #变形：将“iao”结尾的编码变形为大写“N”结尾的编码；用于双拼韵母
+      - xform/(.)ao$/$1C/                       #变形：将“ao”结尾的编码变形为大写“C”结尾的编码；用于双拼韵母；同时排除编码为ao的字
+      - xform/ui$/V/                            #变形：将“ui”结尾的编码变形为大写“V”结尾的编码；用于双拼韵母
+      - xform/in$/B/                            #变形：将“in”结尾的编码变形为大写“B”结尾的编码；用于双拼韵母
+
+      - xlit/QWRTYUIOPSDFGHJKLZXCVBNM/qwrtyuiopsdfghjklzxcvbnm/
+            #轉寫／Transliteration : 依次將拼寫中見於<左字母表>的字符替換爲<右字母表>對應位置的字符。左、右字母表應包含相同數目的Unicode字符。
+            #转写：格式：xlit/<左字母表>/<右字母表>/
+            #實例：算式 xlit/abc/ABC/  運算元 abracadabra  結果 ABrACAdABrA
+#——————————以下为重点修改部分————————————————
+            # 模糊／Fuzzing : 執行派生運算；派生出的拼寫將獲得「模糊」屬性，可設定將其用作構成詞組的簡碼、但不用於輸入單字。
+            # 格式：fuzz/<模式>/<替換式>/
+            # 實例：算式 fuzz/^([a-z]).+([a-z])$/$1$2/
+            # 效果：以首、尾碼爲多字母音節碼的構詞碼。
+            # 註：需配合 script_translator 的選項 `translator/strict_spelling: true` 方可限定該拼寫不用於輸入單字。
+      - fuzz/^(\w\w)\w{1,2}$/$1/ #利用fuzz的模糊匹配来实现利用辅助码组词并增加到候选词的功能
+#——————————以上为重点修改部分————————————————
+      #- abbrev/^(.).+$/$1/
+            #縮略／Abbreviation : 執行派生運算；派生出的拼寫將獲得「縮略」屬性，會在音節切分時與通常的拼寫做區分處理。
+            #格式：abbrev/<模式>/<替換式>/
+            #實例：算式 abbrev/^([a-z]).+$/$1/
+            #效果：以首字母爲多字母音節碼的縮寫。
+  translator:
+    dictionary: double_pinyin_xnhedn # 指定字典
+    prism: double_pinyin_xnheup # prism 要以本輸入方案的名稱來命名，以免把朙月拼音的拼寫映射表覆蓋掉
+#    preedit_format: #這段代碼用來將輸入的雙拼碼反轉爲全拼顯示；待見雙拼碼的可以把這段拿掉
+#      - xform/([bpmfdtnljqx])n/$1iao/ 
+#      - xform/(\w)g/$1eng/
+#      - xform/(\w)q/$1iu/
+#      - xform/(\w)w/$1ei/
+#      - xform/([dtnlgkhjqxyvuirzcs])r/$1uan/
+#      - xform/(\w)t/$1ve/
+#      - xform/(\w)y/$1un/
+#      - xform/([dtnlgkhvuirzcs])o/$1uo/
+#      - xform/(\w)p/$1ie/
+#      - xform/([jqx])s/$1iong/
+#      - xform/(\w)s/$1ong/
+#      - xform/(\w)d/$1ai/
+#      - xform/(\w)f/$1en/
+#      - xform/(\w)h/$1ang/
+#      - xform/(\w)j/$1an/
+#      - xform/([gkhvuirzcs])k/$1uai/
+#      - xform/(\w)k/$1ing/
+#      - xform/([jqxnl])l/$1iang/
+#      - xform/(\w)l/$1uang/
+#      - xform/(\w)z/$1ou/
+#      - xform/([gkhvuirzcs])x/$1ua/
+#      - xform/(\w)x/$1ia/
+#      - xform/(\w)c/$1ao/
+#      - xform/([dtgkhvuirzcs])v/$1ui/
+#      - xform/(\w)b/$1in/
+#      - xform/(\w)m/$1ian/
+#      - xform/([aoe])\1(\w)/$1$2/
+#      - "xform/(^|[ '])v/$1zh/"
+#      - "xform/(^|[ '])i/$1ch/"
+#      - "xform/(^|[ '])u/$1sh/"
+#      - xform/([jqxy])v/$1u/
+#      - xform/([nl])v/$1ü/
