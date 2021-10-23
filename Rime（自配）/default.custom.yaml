@@ -1,0 +1,23 @@
+customization:
+  distribution_code_name: Weasel
+  distribution_version: 0.14.3
+  generator: "Rime::SwitcherSettings"
+  modified_time: "Fri Sep 20 14:24:08 2019"
+  rime_version: 1.5.3
+patch:
+  menu:
+    page_size: 5   #候选词数量
+  switcher:
+    caption: 〔方案选单〕
+    hotkeys:
+    - Control+Shift+F4   #设置方案选单的快捷键
+  schema_list:
+    - schema: flypy_double
+  ascii_composer/good_old_caps_lock: true
+  ascii_composer:
+    switch_key: 
+      Caps_Lock: commit_text
+      Shift_L: commit_text
+      Shift_R: commit_text    
+  key_binder:
+    bindings: [{accept: semicolon, send: 2, when: has_menu}, {accept: apostrophe, send: 3, when: has_menu}, {accept: equal, send: Page_Down, when: has_menu}, {accept: minus, send: Page_Up, when: has_menu}, {accept: "Control+t", toggle: flypy_zh_simp, when: always}]

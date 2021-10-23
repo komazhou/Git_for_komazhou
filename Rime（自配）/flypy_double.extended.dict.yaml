@@ -1,0 +1,36 @@
+# Rime dictionary
+# encoding: utf-8
+#
+#  BetterRime词库增强包－实用版の准正式版 by @imy0823
+#
+#
+# 部署位置：
+# ~/.config/ibus/rime  (Linux)
+# ~/Library/Rime  (Mac OS)
+# %APPDATA%\Rime  (Windows)
+#
+# 於重新部署後生效
+#
+
+---
+name: flypy_double.extended
+version: "2014.09.07"
+sort: by_weight
+# vocabulary: essay
+use_preset_vocabulary: true
+#下面的是本词库包含的所有词库，请根据需要开启/禁用，词条前添删#号即可开启/关闭词库。
+import_tables:
+  - flypy_double.luna
+  - flypy_double.flypyfz
+  - flypy_double.net
+  - flypy_double.website
+  - flypy_double.place
+  - flypy_double.chat
+  - flypy_double.computer
+  - flypy_double.shopping
+#  - flypy_double.sgmain
+#  - flypy_double.sgplus
+#  - flypy_double.sgplus2
+#  - flypy_double.poetry
+
+...
