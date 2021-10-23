@@ -210,8 +210,9 @@ preset_keyboards:
       #第四行
       - {click: DefaultKeyboard, width: 25}
       #- { click: DefaultKeyboard, width: 25 }
-      - {click: space, width: 55}
-      - {click: Return, width: 20}
+      - {click: space, width: 45}
+      - {click: ".", label: ".", width: 12}
+      - {click: Return, width: 18}
     width: 10
     name: "苹果数字键盘"
 
