@@ -10,7 +10,7 @@ __build_info:
   rime_version: 1.5.3
   timestamps:
     FlyDP.custom: 0
-    FlyDP.schema: 1631673057
+    FlyDP.schema: 1634732802
     default: 1561218646
     default.custom: 1630566775
     key_bindings: 1561218646
@@ -49,10 +49,16 @@ custom_phraseYH:
   enable_sentence: false
   initial_quality: "-1"
   user_dict: FlyDP_user
+emoji_suggestion:
+  opencc_config: emoji.json
+  option_name: emoji_suggestion
+  tips: all
 engine:
   filters:
     - simplifier
     - uniquifier
+    - "simplifier@emoji_suggestion"
+    - "simplifier@symbol_support"
     - "reverse_lookup_filter@reverse_lookup"
     - "simplifier@English"
   processors:
@@ -478,12 +484,22 @@ switches:
   - name: full_shape
     reset: 0
     states: ["半", "全"]
+  - name: emoji_suggestion
+    reset: 1
+    states: ["😭️", "😄️"]
+  - name: symbol_support
+    reset: 1
+    states: ["无符", "符"]
   - name: ascii_punct
     reset: 0
     states: ["。，", "．，"]
   - name: English
     reset: 0
     states: ["EN_关", "EN_开"]
+symbol_support:
+  opencc_config: symbol.json
+  option_name: symbol_support
+  tips: all
 translator:
   dictionary: FlyDP
   preedit_format:

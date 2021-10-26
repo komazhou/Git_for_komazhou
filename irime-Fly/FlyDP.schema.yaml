@@ -33,12 +33,12 @@ switches:
   - name: full_shape
     reset: 0
     states: [ 半, 全 ]
-#  - name: emoji_suggestion
-#    reset: 1
-#    states: [ "😭️", "😄️" ]
-#  - name: symbol_support
-#    reset: 1
-#    states: [ "无符", "符" ]
+  - name: emoji_suggestion
+    reset: 1
+    states: [ "😭️", "😄️" ]
+  - name: symbol_support
+    reset: 1
+    states: [ "无符", "符" ]
   - name: ascii_punct
     reset: 0
     states: [ 。，, ．， ]
@@ -79,8 +79,8 @@ engine:
   filters:
     - simplifier
     - uniquifier
-#    - simplifier@emoji_suggestion #表情
-#    - simplifier@symbol_support #符号支持
+    - simplifier@emoji_suggestion #表情
+    - simplifier@symbol_support #符号支持
     - reverse_lookup_filter@reverse_lookup # 反查濾鏡
     - simplifier@English
 
@@ -89,16 +89,16 @@ simplifier:
   opencc_config: s2t.json
 
 #emoji表情
-#emoji_suggestion:
-#  opencc_config: emoji.json
-#  option_name: emoji_suggestion
-#  tips: all
+emoji_suggestion:
+  opencc_config: emoji.json
+  option_name: emoji_suggestion
+  tips: all
   
 #symbol符号
-#symbol_support:
-#  opencc_config: symbol.json
-#  option_name: symbol_support
-#  tips: all
+symbol_support:
+  opencc_config: symbol.json
+  option_name: symbol_support
+  tips: all
 
 # 简单的 English互译滤镜
 English: 
