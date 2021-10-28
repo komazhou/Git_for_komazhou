@@ -4,6 +4,8 @@
 <h2></h2>
 <hr>
 
+<ul><li>原文出处<a href="https://github.com/LEOYoon-Tsaw/Rime_collections/blob/master/Rime_description.md">Schema.yaml 詳解 by 雪齋</a>侵删</li></ul>
+
 <h2>開始之前</h2>
 
 <pre><code># Rime schema
