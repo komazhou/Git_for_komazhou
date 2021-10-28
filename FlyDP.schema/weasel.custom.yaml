@@ -36,6 +36,10 @@ patch:
     ascii_mode: true
   "app_options/findandrunrobot.exe":
     ascii_mode: true
+  "app_options/mathtype.exe":
+    ascii_mode: true
+  "app_options/acad.exe":
+    ascii_mode: true
 
 #自定义配色一:Pron
   "preset_color_schemes/Pron":
