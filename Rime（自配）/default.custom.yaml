@@ -1,23 +1,45 @@
-customization:
-  distribution_code_name: Weasel
-  distribution_version: 0.14.3
-  generator: "Rime::SwitcherSettings"
-  modified_time: "Fri Sep 20 14:24:08 2019"
-  rime_version: 1.5.3
+# default.custom.yaml
+# 基础引擎框架配置，patch 会更新 default.yaml 文件
+# yaml语法中，以 - 开头的行表示构成一个数组
+# minus/减号，equal/等号，comma/逗号，period/句号，exclam/感叹号，
+# numbersign/井号，percent/百分号，semicolon/分号，apostrophe/单引号,brcketleft/左中括号,bracketright/右中括号
 patch:
-  menu:
-    page_size: 5   #候选词数量
-  switcher:
-    caption: 〔方案选单〕
-    hotkeys:
-    - Control+Shift+F4   #设置方案选单的快捷键
+  menu/page_size: 5   #候选词数量
+  switcher/hotkeys:
+    # 切换选项菜单的快捷键
+    - Control+Shift+F4
+    - Control+Shift+grave
   schema_list:
+    - schema: FlyDP # 小鹤双拼+形辅
     - schema: flypy_double
-  ascii_composer/good_old_caps_lock: true
-  ascii_composer:
-    switch_key: 
-      Caps_Lock: commit_text
-      Shift_L: commit_text
-      Shift_R: commit_text    
+
+
+
+
   key_binder:
-    bindings: [{accept: semicolon, send: 2, when: has_menu}, {accept: apostrophe, send: 3, when: has_menu}, {accept: equal, send: Page_Down, when: has_menu}, {accept: minus, send: Page_Up, when: has_menu}, {accept: "Control+t", toggle: flypy_zh_simp, when: always}]
+    bindings:
+#      - {accept: semicolon, send: 2, when: has_menu} #只要有“候选字”时，分号/冒号选中第2个候选字发送
+#      - {accept: apostrophe, send: 3, when: has_menu} #只要有“候选字”时，引号选中第3个候选字发送
+
+#      - {accept: bracketright, send: Page_Down, when: has_menu} #按右方括号键“】”向下翻页
+#      - {accept: bracketleft, send: Page_Up, when: paging} #按左方括号键“【”向上翻页
+#      - {accept: "Control+Shift+t", toggle: zh_simp_s2t, when: always}  #when: always表示在任何时候按Ctrl+Shift+T切换繁体和简体
+#      - {accept: "Shift+space", toggle: full_shape, when: always}
+#      - {accept: "Control+space", toggle: ascii_mode, when: always} #“ascii_mode”为“字符模式”，本条表示中英文切换快捷键
+
+      - {accept: "Shift+Tab", send: "Shift+Left", when: composing}
+      - {accept: Tab, send: "Shift+Right", when: composing} #when: composing（编码构词） 表示在编码中生效，表示按“Tab”键发送组合键"Shift+Right",
+      - {accept: equal, send: Page_Down, when: has_menu} #when: has_menu  表示只要有“候选字”时，即满足条件按“等号”向下翻页
+      - {accept: minus, send: Page_Up, when: paging} #when: paging 表示仅当“候选字”已发生向后翻页的时候，按“减号”向前翻页
+      - {accept: period, send: Page_Down, when: has_menu} #按“句号”向下翻页
+      - {accept: comma, send: Page_Up, when: paging} #按“逗号”向上翻页
+      - {accept: "Control+Shift+1", select: .next, when: always}
+      - {accept: "Control+Shift+2", toggle: ascii_mode, when: always}
+      - {accept: "Control+Shift+3", toggle: full_shape, when: always}
+      - {accept: "Control+Shift+4", toggle: simplification, when: always}
+      - {accept: "Control+Shift+5", toggle: extended_charset, when: always}
+      - {accept: "Control+Shift+exclam", select: .next, when: always}
+      - {accept: "Control+Shift+at", toggle: ascii_mode, when: always}
+      - {accept: "Control+Shift+numbersign", toggle: full_shape, when: always}
+      - {accept: "Control+Shift+dollar", toggle: simplification, when: always}
+      - {accept: "Control+Shift+percent", toggle: extended_charset, when: always}

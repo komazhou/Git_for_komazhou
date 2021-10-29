@@ -35,7 +35,6 @@ engine:
     - abc_segmentor
     - punct_segmentor
     - fallback_segmentor
-    - affix_segmentor@fuzhu
   translators:
     - punct_translator
     - script_translator
