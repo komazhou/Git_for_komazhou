@@ -1,68 +1,130 @@
+# weasel.custom.yaml
 customization:
   distribution_code_name: Weasel
-  distribution_version: 0.9.29.1
+  distribution_version: 0.14.3
   generator: "Weasel::UIStyleSettings"
-  modified_time: "Wed Feb 12 09:16:25 2014"
-  rime_version: 1.1
-
+  modified_time: "Mon Oct 12 13:14:35 2020"
+  rime_version: 1.5.3
+  #补丁的修改方式有两种：
+  # 1、采用层级展开方式，需要对下级所有对象都进行参数设置，否则会丢失未设置对象的默认参数；对部分参数修改不推荐使用
+  # 2、采用斜杠的添加方式可以对指定对象打进行参数的补丁设置，其他为设置对象保留默认参数。推荐使用
+  # 如："style/inline_preedit": true 这样表示单独对inline_preedit打补丁，对style的其他设置无影响
+  # 双引号、单引号和不加引号的效果一样，建议使用双引号
 patch:
-
+  #us_keyboard_layout: true	# 键盘选项：应用美式键盘布局
+  #show_notifications_when: appropriate	# 状态通知，适当（appropriate），也可设为全开（always）全关（never）
   # 以下软件默认英文模式
-  "app_options/gvim.exe":
-    ascii_mode: true
-  "app_options/tcmatch64.exe":
+  # 注意： 程序名字全用小写字母 !!!
+  app_options/gvim.exe:
     ascii_mode: true
   "app_options/totalcmd64.exe":
     ascii_mode: true
-  "app_options/findandrunrobot.exe":
+  "app_options/totalcmd.exe":
     ascii_mode: true
-    style/color_scheme: win10
+  "app_options/mathtype.exe":
+    ascii_mode: true
+  "app_options/acad.exe":
+    ascii_mode: true
+  "app_options/i_view64.exe":
+    ascii_mode: true
+  "app_options/i_view32.exe":
+    ascii_mode: true
+  "app_options/putty.exe":
+    ascii_mode: true
+  "app_options/mintty.exe":
+    ascii_mode: true
 
   # 以下修改皮肤
-  "style/display_tray_icon": true
-  "style/horizontal": false #横排显示
-  "style/font_face": "Microsoft YaHei" #字体
-  "style/font_point": 12 #字体大小
-  "style/inline_preedit": true # 嵌入式候选窗单行显示
+#设置 style:
+  "style/color_scheme": Wii2	# 设定配色方案的名称
+  'style/display_tray_icon': false	# 显示托盘图标，开启（true）；关闭（false），默认false
+  style/font_face: "Microsoft YaHei"	# 设定配色方案的字体；可用"黑体"，默认为"Microsoft YaHei"
+  style/font_point: 12	# 设定配色方案的字体大小，默认14
+  style/fullscreen: false	# 全屏输入，即候选窗口占满整个屏幕，默认false
+  style/horizontal: false	# 候选窗是否横排，true横排，false竖排，默认false
+  style/inline_preedit: true	# TSF嵌入模式，正在输入的编码将嵌入到光标焦点处（仅支持TSF），默认false
+  style/label_format: "%s. "	# 候选字前面的编号，默认"%s."
+# 设置style/layout:
+  style/layout/border_width: 0	# 候选窗口的外层边框宽度，默认3
+  style/layout/candidate_spacing: 5	# 候选字行间隔，默认5
+  style/layout/hilite_padding: 2	# 候选字背景色色块高度，默认2，若想候选字背景色块无边界填充候选框，仅需其高度和候选字上下边距一致即可
+  style/layout/hilite_spacing: 3	# 序号和候选字之间的间隔，默认4
+  style/layout/margin_x: 5	# 候选字左右边距，默认12
+  style/layout/margin_y: 5	# 候选字上下边距，默认12
+  style/layout/min_height: 0	# 候选窗口的最小高，默认0
+  style/layout/min_width: 150	# 候选窗口的最小宽，默认160
+  style/layout/round_corner: 6	# 候选字背景色块圆角幅度，默认4
+  style/layout/spacing: 10	# 当候选窗口是非TSF（编码）嵌入（光标）模式时，编码与候选遮罩色块之间的距离，默认10
 
-  "style/layout/border_width": 0
-  "style/layout/border": 0
-  "style/layout/margin_x": 12 #候选字左右边距
-  "style/layout/margin_y": 12 #候选字上下边距
-  "style/layout/hilite_padding": 12 #候选字背景色色块高度 若想候选字背景色块无边界填充候选框，仅需其高度和候选字上下边距一致即可
-  "style/layout/hilite_spacing": 3 # 序号和候选字之间的间隔
-  "style/layout/spacing": 10 #作用不明
-  "style/layout/candidate_spacing": 24 # 候选字间隔
-  "style/layout/round_corner": 0 #候选字背景色块圆角幅度
-
-  "style/color_scheme": win10
-
+#自定义配色
   preset_color_schemes:
-    "Micosoft":
-      name: "Micosoft"
-      author: "XNOM"
-      back_color: 0xffffff #候选框 背景色
-      border_color: 0xD77800 #候选框 边框颜色
-      text_color: 0x000000 #已选择字 文字颜色
-      hilited_text_color: 0x000000 #已选择字右侧拼音 文字颜色
-      hilited_back_color: 0xffffff #已选择字右侧拼音 背景色
-      hilited_candidate_text_color: 0xffffff #候选字颜色
-      hilited_candidate_back_color: 0xD77800 #候选字背景色
-      candidate_text_color: 0x000000 #未候选字颜色
+    Pron:
+      name: Pron
+      author: 周庸生
+      back_color: 0x000000
+      border_color: 0x000000
+      text_color: 0xffffff
+      hilited_text_color: 0x000000
+      hilited_back_color: 0x009bff
+      hilited_candidate_text_color: 0x000000
+      hilited_candidate_back_color: 0x009bff
+      candidate_text_color: 0xffffff
+      comment_text_color: 0xffffff
+      label_color: 0xffffff
+      hilited_lable_color: 0x000000
+      hilited_comment_text_color: 0x000000
 
-    "win10":  # 在配色方案列表裏加入標識爲 starcraft 的新方案
-      name: Windows10
-      author: me
+    Micosoft:
+      name: "Micosoft" # 配色方案名称
+      author: "XNOM" # 配色方案作者
+      back_color: 0xffffff # 候选框背景色
+      border_color: 0xD77800 # 候选框边框颜色
+      text_color: 0x000000 # 已选择字文字颜色
+      hilited_text_color: 0x000000 # 已选择字右侧拼音文字颜色
+      hilited_back_color: 0xffffff # 已选择字右侧拼音背景色
+      hilited_candidate_text_color: 0xffffff # 候选字颜色
+      hilited_candidate_back_color: 0xD77800 # 候选字背景色
+      candidate_text_color: 0x000000 # 未候选字颜色
+
+    momo:  # 配色方案列表加入名字momo的配色方案 #该配色无底色，简洁但不太好
+      name: 默默／Momo
+      author: Momo
       text_color: 0x000000             # 編碼行文字顏色，24位色值，用十六進制書寫方便些，順序是藍綠紅0xBBGGRR
       candidate_text_color: 0x000000   # 候選項文字顏色，當與文字顏色不同時指定
       back_color: 0xFFFFFF             # 底色
-      border_color: 0x7E7969           # 邊框顏色，與底色相同則爲無邊框的效果
-      hilited_text_color: 0xFFFFFF     # 高亮文字，即與當前高亮候選對應的那部份輸入碼
-      hilited_back_color: 0x7E7969     # 設定高亮文字的底色，可起到凸顯高亮部份的作用
-      hilited_candidate_text_color: 0xFFFFFF  # 高亮候選項的文字顏色，要醒目！
-      hilited_candidate_back_color: 0x7E7969  # 高亮候選項的底色，若與背景色不同就會顯出光棒
+      border_color: 0xFFFFFF           # 邊框顏色，與底色相同則爲無邊框的效果
+      hilited_text_color: 0x000000     # 高亮文字，即與當前高亮候選對應的那部份輸入碼
+      hilited_back_color: 0xFFFFFF     # 設定高亮文字的底色，可起到凸顯高亮部份的作用
+      hilited_candidate_text_color: 0xEE6E00  # 高亮候選項的文字顏色，要醒目！
+      hilited_candidate_back_color: 0xFFFFFF  # 高亮候選項的底色，若與背景色不同就會顯出光棒
 
-    "mojave_dark":
+    red_dark:
+      name: "夏日红"
+      author: "thepoy"
+      back_color: 0x030303
+      border_color: 0x0A0A0A
+      text_color: 0xFAFAFF
+      hilited_text_color: 0xFFFFFF
+      hilited_back_color: 0x4734D6
+      hilited_candidate_text_color: 0xFFFFFF
+      hilited_candidate_back_color: 0x4734D6
+      candidate_text_color: 0xFFFFFF
+      comment_text_color: 0xFCFCFC
+
+    orange_dark:
+      name: "秋日橙"
+      author: "thepoy"
+      back_color: 0x030303
+      border_color: 0x0A0A0A
+      text_color: 0xFAFAFF
+      hilited_text_color: 0xFFFFFF
+      hilited_back_color: 0x4734D6
+      hilited_candidate_text_color: 0xFFFFFF
+      hilited_candidate_back_color: 0x1D66CD
+      candidate_text_color: 0xFFFFFF
+      comment_text_color: 0xFCFCFC
+
+    mojave_dark:
       name: "沙漠夜／Mojave Dark"
       author: "xiehuc <xiehuc@gmail.com>"
       horizontal: true
@@ -87,7 +149,8 @@ patch:
       # hilited_candidate_back_color: 0xcb5d00
       hilited_candidate_label_color: 0xefefef
       comment_text_color: 0xdedddd
-    "apathy":
+
+    apathy: #配色ok
       author: "LIANG Hai"
       back_color: 0xFFFFFF
       border_height: 0
@@ -105,4 +168,83 @@ patch:
       # label_font_face: "STHeitiSC-Light"
       label_font_point: 12
       name: "冷漠／Apathy"
-      text_color: 0x424242  
+      text_color: 0x424242
+
+    Mxy: #与apathy配色近似，都不错
+      name: 兴宇／Mxy
+      author: Mxy      # 編碼行文字顏色，24位色值，用十六進制書寫方便些，順序是藍綠紅0xBBGGRR
+      text_color: 0x000000      # 候選項文字顏色，當與文字顏色不同時指定
+      #candidate_text_color      # 底色
+      back_color: 0xFCFCFC      # 邊框顏色，與底色相同則爲無邊框的效果
+      border_color: 0xFCFCFC      # 高亮文字，即與當前高亮候選對應的那部份輸入碼
+      #hilited_text_color: 0xfecb96      # 設定高亮文字的底色，可起到凸顯高亮部份的作用
+      #hilited_back_color: 0x000000      # 高亮候選項的文字顏色，要醒目！
+      hilited_candidate_text_color: 0xFFFFFF      # 高亮候選項的底色，若與背景色不同就會顯出光棒
+      hilited_candidate_back_color: 0xED9564
+
+    Wii2:
+      name: Wii2
+      author: PYatoo
+      back_color: 0xefefef
+      border_color: 0xefefef
+      text_color: 0x575759
+      hilited_text_color: 0xED9564
+      hilited_back_color: 0xefefef
+      hilited_candidate_text_color: 0xffffff
+      hilited_candidate_back_color: 0xED9564
+      candidate_text_color: 0x575759
+      comment_text_color: 0xcac9c8
+      hilited_comment_text_color: 0xffffff
+      label_color: 0xcac9c8
+
+    "ps4":  #設此方案爲默認方案。
+      name: "遊驛四／ps4"  #方案名。中文西文皆可。
+      author: " Patricivs ipatrickmac@qq.com"  #作者名及連繫方式。
+      text_color: 0xffffff  #已選候選項顏色。格式爲0xbbggrr
+      back_color: 0x000000  #底色
+      border_color: 0x000000  #邊框色
+      label_color: 0xffffff  #序號顏色，鼠鬚管有效
+      hilited_text_color: 0xffffff  #編碼顏色
+      hilited_back_color: 0x575759  #編碼底色
+      candidate_text_color: 0xffffff  #候選項顏色
+      comment_text_color: 0xffffff  #編碼提示顏色
+      hilited_candidate_text_color: 0xffffff  #首選項文本顏色
+      hilited_comment_text_color: 0xffffff  #高亮編碼提示顏色
+      hilited_candidate_back_color: 0xe89f00  #首選項高亮背景色
+
+    "Moonlight":
+      name: 月白／Moonlight
+      author: Mr.Yesterday
+      back_color: 0xEAE5E2
+      border_color: 0xEAE5E2
+      text_color: 0x404040
+      hilited_text_color: 0x404040
+      hilited_back_color: 0xDACFB9
+      hilited_candidate_back_color: 0xDACFB9
+      hilited_candidate_text_color: 0x000000
+      candidate_text_color: 0x404040
+      comment_text_color: 0x404040
+
+    "qbycs":
+      name: "qbycs"
+      author: "zz"
+      back_color: 0xEDEDED #候选框 背景色
+      border_color: 0xEDEDED #候选框 边框颜色
+      text_color: 0x000000 #已选择字 文字颜色
+      hilited_text_color: 0xFF0008 #已选择字右侧拼音 文字颜色
+      hilited_back_color: 0xEDEDED #已选择字右侧拼音 背景色
+      hilited_candidate_text_color: 0x000000 #候选字颜色
+      hilited_candidate_back_color: 0xFDD5B4 #候选字背景色
+      candidate_text_color: 0x545454 #
+
+    "asd":
+      name: 阿斯顿／asd
+      author: Jungzl
+      text_color: 0x666666
+      candidate_text_color: 0xEEEEEE
+      back_color: 0x333333
+      border_color: 0x555555
+      hilited_text_color: 0x000000
+      hilited_back_color: 0xFFFFFF
+      hilited_candidate_text_color: 0xFFFFFF
+      hilited_candidate_back_color: 0xCE7539
