@@ -1,18 +1,19 @@
 # default.custom.yaml
-
+# 基础引擎框架配置，patch 会更新 default.yaml 文件
+# yaml语法中，以 - 开头的行表示构成一个数组
+# minus/减号，equal/等号，comma/逗号，period/句号，exclam/感叹号，
+# numbersign/井号，percent/百分号，semicolon/分号，apostrophe/单引号,brcketleft/左中括号,bracketright/右中括号
 patch:
+  menu/page_size: 5   #候选词数量
+  switcher/hotkeys:
+    # 切换选项菜单的快捷键
+    - Control+Shift+F4
+    - Control+Shift+grave
   schema_list:
     - schema: FlyDP # 小鹤双拼+形辅
-  "menu/page_size": 5
-  switcher:
-    #abbreviate_options: true #是否压缩选项
-    caption: "〔方案选择〕"
-    #fold_options: true #是否开启二级选项
-    hotkeys:
-      #- "Control+grave"
-      #- "Control+Shift+grave"
-      #- F4
-      - Control+Shift+F4
+    - schema: flypy_double
+    - schema: double_pinyin_xnhedn # 小鹤双拼+辅助码
+    - schema: double_pinyin_flypy # 小鹤双拼+辅助码
   ascii_composer: # 设置caps、shift、control等键的作用
     good_old_caps_lock: true # 若为true，caps只切换大小写
     switch_key:
@@ -27,39 +28,67 @@ patch:
 # commit_text 已輸入的候選文字上屏並切換至西文輸入模式
 # commit_code 已輸入的編碼字符上屏並切換至西文輸入模式
 # 設爲 noop，屏蔽該切換鍵
-  recognizer/patterns:
-    email: "^[A-Za-z][-_.0-9A-Za-z]*@.*$"
-    uppercase: "[A-Z][-_+.'0-9A-Za-z]*$"
-    url: "^(www[.]|https?:|ftp[.:]|mailto:|file:).*$|^[a-z]+[.].+$"
-    reverse_lookup: "U[a-z]*'?$"
-  key_binder/bindings: # 设置哪些键可以翻页，需要哪个取消注释即可
-    # - { when: composing, accept: Tab, send: Page_Up } # Tab 翻页
-    - { when: composing, accept: Tab, send: Right } #composing操作输入码用；这里通过Tab移动光标向右
-    # - { when: composing, accept: Shift+Tab, send: Page_Up } #Shift+Tab向前翻页
-    - { when: paging, accept: minus, send: Page_Up } #减号向前翻页
-    - { when: has_menu, accept: equal, send: Page_Down } #等号向后翻页
-    - { when: paging, accept: bracketleft, send: Page_Up } #[键向后翻页
-    - { when: has_menu, accept: bracketright, send: Page_Down } #]键向后翻页
-    - {accept: comma, send: Page_Up, when: paging} #paging翻页用；这里通过逗号向前翻页
-    - {accept: period, send: Page_Down, when: has_menu} #has_menu操作后选项用；这里通过句号向后翻页；这时句号无法顶字上屏，方便输入网址等使用。  
-# Ctrl+Shift+数字 切换开关numbered_mode_switch: 
-    - { when: always, accept: Control+Shift+1, select: .next }
-    - { when: always, accept: Control+Shift+2, toggle: zh_simp_s2t }
-    - { when: always, accept: Control+Shift+3, toggle: emoji_suggestion }
-    - { when: always, accept: Control+Shift+4, toggle: symbol_support }
-    - { when: always, accept: Control+Shift+5, toggle: ascii_punct }
-    - { when: always, accept: Control+Shift+6, toggle: full_shape }
-    - { when: always, accept: Control+Shift+exclam, select: .next }
-    - { when: always, accept: Control+Shift+at, toggle: zh_simp_s2t }
-    - { when: always, accept: Control+Shift+numbersign, toggle: emoji_suggestion }
-    - { when: always, accept: Control+Shift+dollar, toggle: symbol_support }
-    - { when: always, accept: Control+Shift+percent, toggle: ascii_punct }
-    - { when: always, accept: Control+Shift+asciicircum, toggle: full_shape }
-# Windows 兼容  windows_compatible_mode_switch:
-    - { when: always, accept: Shift+space, toggle: full_shape }
-    - { when: always, accept: Control+comma, toggle: ascii_punct }
-    - { when: always, accept: Control+period, toggle: ascii_punct }
-    - { when: always, accept: Control+Shift+f, toggle: zh_simp_s2t }
-    - { when: always, accept: Control+Shift+F, toggle: zh_simp_s2t }
-# 小键盘回车设为普通回车kp_enter_is_return:
-    - { when: has_menu, accept: KP_Enter, send: Return }
+
+
+  key_binder:
+    bindings:
+#      - {accept: semicolon, send: 2, when: has_menu} #只要有“候选字”时，分号/冒号选中第2个候选字发送
+#      - {accept: apostrophe, send: 3, when: has_menu} #只要有“候选字”时，引号选中第3个候选字发送
+
+#      - {accept: bracketright, send: Page_Down, when: has_menu} #按右方括号键“】”向下翻页
+#      - {accept: bracketleft, send: Page_Up, when: paging} #按左方括号键“【”向上翻页
+#      - {accept: "Control+Shift+t", toggle: zh_simp_s2t, when: always}  #when: always表示在任何时候按Ctrl+Shift+T切换繁体和简体
+#      - {accept: "Shift+space", toggle: full_shape, when: always}
+#      - {accept: "Control+space", toggle: ascii_mode, when: always} #“ascii_mode”为“字符模式”，本条表示中英文切换快捷键
+
+      - {accept: "Shift+Tab", send: "Shift+Left", when: composing}
+      - {accept: Tab, send: "Shift+Right", when: composing} #when: composing（编码构词） 表示在编码中生效，表示按“Tab”键发送组合键"Shift+Right",
+      - {accept: equal, send: Page_Down, when: has_menu} #when: has_menu  表示只要有“候选字”时，即满足条件按“等号”向下翻页
+      - {accept: minus, send: Page_Up, when: paging} #when: paging 表示仅当“候选字”已发生向后翻页的时候，按“减号”向前翻页
+      - {accept: period, send: Page_Down, when: has_menu} #按“句号”向下翻页
+      - {accept: comma, send: Page_Up, when: paging} #按“逗号”向上翻页
+      - {accept: "Control+Shift+1", select: .next, when: always}
+      - {accept: "Control+Shift+2", toggle: ascii_mode, when: always}
+      - {accept: "Control+Shift+3", toggle: full_shape, when: always}
+      - {accept: "Control+Shift+4", toggle: simplification, when: always}
+      - {accept: "Control+Shift+5", toggle: extended_charset, when: always}
+      - {accept: "Control+Shift+exclam", select: .next, when: always}
+      - {accept: "Control+Shift+at", toggle: ascii_mode, when: always}
+      - {accept: "Control+Shift+numbersign", toggle: full_shape, when: always}
+      - {accept: "Control+Shift+dollar", toggle: simplification, when: always}
+      - {accept: "Control+Shift+percent", toggle: extended_charset, when: always}
+#    # - { when: composing, accept: Tab, send: Page_Up } # Tab 翻页
+#    - { when: composing, accept: Tab, send: Right } #composing操作输入码用；这里通过Tab移动光标向右
+#    # - { when: composing, accept: Shift+Tab, send: Page_Up } #Shift+Tab向前翻页
+#    - { when: paging, accept: minus, send: Page_Up } #减号向前翻页
+#    - { when: has_menu, accept: equal, send: Page_Down } #等号向后翻页
+#    - { when: paging, accept: bracketleft, send: Page_Up } #[键向后翻页
+#    - { when: has_menu, accept: bracketright, send: Page_Down } #]键向后翻页
+#    - {accept: comma, send: Page_Up, when: paging} #paging翻页用；这里通过逗号向前翻页
+#    - {accept: period, send: Page_Down, when: has_menu} #has_menu操作后选项用；这里通过句号向后翻页；这时句号无法顶字上屏，方便输入网址等使用。  
+## Ctrl+Shift+数字 切换开关numbered_mode_switch: 
+#    - { when: always, accept: Control+Shift+1, select: .next }
+#    - { when: always, accept: Control+Shift+2, toggle: zh_simp_s2t }
+#    - { when: always, accept: Control+Shift+3, toggle: emoji_suggestion }
+#    - { when: always, accept: Control+Shift+4, toggle: symbol_support }
+#    - { when: always, accept: Control+Shift+5, toggle: ascii_punct }
+#    - { when: always, accept: Control+Shift+6, toggle: full_shape }
+#    - { when: always, accept: Control+Shift+exclam, select: .next }
+#    - { when: always, accept: Control+Shift+at, toggle: zh_simp_s2t }
+#    - { when: always, accept: Control+Shift+numbersign, toggle: emoji_suggestion }
+#    - { when: always, accept: Control+Shift+dollar, toggle: symbol_support }
+#    - { when: always, accept: Control+Shift+percent, toggle: ascii_punct }
+#    - { when: always, accept: Control+Shift+asciicircum, toggle: full_shape }
+## Windows 兼容  windows_compatible_mode_switch:
+#    - { when: always, accept: Shift+space, toggle: full_shape }
+#    - { when: always, accept: Control+comma, toggle: ascii_punct }
+#    - { when: always, accept: Control+period, toggle: ascii_punct }
+#    - { when: always, accept: Control+Shift+f, toggle: zh_simp_s2t }
+#    - { when: always, accept: Control+Shift+F, toggle: zh_simp_s2t }
+## 小键盘回车设为普通回车kp_enter_is_return:
+#    - { when: has_menu, accept: KP_Enter, send: Return }
+#  recognizer/patterns:
+#    email: "^[A-Za-z][-_.0-9A-Za-z]*@.*$"
+#    uppercase: "[A-Z][-_+.'0-9A-Za-z]*$"
+#    url: "^(www[.]|https?:|ftp[.:]|mailto:|file:).*$|^[a-z]+[.].+$"
+#    reverse_lookup: "U[a-z]*'?$"
