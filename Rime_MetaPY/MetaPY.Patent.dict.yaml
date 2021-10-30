@@ -1634,7 +1634,6 @@ use_preset_vocabulary: false
 磨光机
 抹泥板
 木工锉
-木工锯
 暖气片
 抛光膏
 抛光机
@@ -1645,7 +1644,6 @@ use_preset_vocabulary: false
 其他锉
 其他刀
 其他剪
-其他锯
 其他刷
 铅封钳
 切割片
@@ -1863,7 +1861,6 @@ use_preset_vocabulary: false
 电唱盘
 电传机
 电磁泵
-电磁波
 电磁场
 电刺激
 电磁谱
@@ -2190,7 +2187,6 @@ use_preset_vocabulary: false
 金属带
 金属化
 静磁泵
-静磁波
 静电计
 精密度
 净面积

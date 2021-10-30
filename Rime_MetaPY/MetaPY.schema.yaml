@@ -1,26 +1,41 @@
 # Rime schema
 # encoding: utf-8
+# 方案详解参考：https://github.com/LEOYoon-Tsaw/Rime_collections/blob/master/Rime_description.md
 # 基于全拼方案
 # 感谢fkxxyz提供的词库支持 - https://www.fkxxyz.com
 
 schema:
+  name: "元拼" #基于小鹤双拼和小鹤形码"
   schema_id: MetaPY
-  name: 元拼
   version: "1.0"
   author:
     - Rime schema by 佛振 <chen.sst@gmail.com>
     - flypy layout by 鶴
     - MetaPY layout by 周辉〈komazhou630@gmail.com>
   description: |
-    朙月拼音＋小鶴雙拼+小鶴形码辅助方案。
+    基于朙月拼音下的小鶴雙拼方案
+    特点：
+      1、增加小鹤形码辅助组词和造句。
+      2、保留小鹤原生反查方案。
+      3、增加搜狗输入法的U模式反查生词。
+      4、增加emoji 表情支持
+      5、增加特殊符号的输入支持
+      6、增加四叶草方案词库，感谢fkxxyz提供的词库支持 - https://www.fkxxyz.com
   dependencies:    # 如果本方案依賴於其它方案〔通常來說會依頼其它方案做爲反查，抑或是兩種或多種方案混用時〕
     - luna_pinyin
-    - core   #添加core.schema.yaml， 调用lua精准过滤生僻字2021年08月24日
+#    - core   #添加core.schema.yaml， 调用lua精准过滤生僻字2021年08月24日
+
 
 switches:
+  - name: ascii_mode
+    reset: 0 #默认中文编码
+    states: [ 中, 英 ]
   - name: zh_simp_s2t
     reset: 0 #默认简体汉字 0为下方中括号内的左项,1为右项
     states: [ 汉字, 漢字 ]
+  - name: full_shape
+    reset: 0
+    states: [ 半, 全 ]
   - name: emoji_suggestion
     reset: 1
     states: [ "😭️", "😄️" ]
@@ -30,35 +45,32 @@ switches:
   - name: ascii_punct
     reset: 0
     states: [ 。，, ．， ]
-  - name: full_shape
-    reset: 0
-    states: [ 半, 全 ]
-  - name: ascii_mode
-    reset: 0 #默认中文编码
-    states: [ 中, 英 ]
-  - name: extended_char             # lua精准过滤生僻字，控制开关
-    reset: 1                        #默认1，常用
-    states: ["超集", "常用"]
+  - name: English              #简单English互译滤镜
+    reset: 0                        #默认1，常用
+    states: ["EN_关", "EN_开"]
+#  - name: extended_char             # lua精准过滤生僻字，控制开关
+#    reset: 1                        #默认1，常用
+#    states: ["超集", "常用"]
 
 engine:
   processors:
     - ascii_composer
-    - recognizer
+    - recognizer  #缺少这个会导致lua计算器无法使用
     - key_binder
     - speller
     - punctuator
     - selector
     - navigator
     - express_editor
-    - lua_processor@select_character_processor  # 添加 以词定句
+#    - lua_processor@select_character_processor  # 添加 以词定句
   segmentors:
     - ascii_segmentor
     - matcher
     - abc_segmentor
     - punct_segmentor
     - affix_segmentor@Semi-EN
-    - affix_segmentor@flypydz # 自定義tag flypydz
-    - affix_segmentor@luna_pinyin # 自定義tag luna_pinyin
+    - affix_segmentor@flypydz # 自定义tag flypydz
+    - affix_segmentor@luna_pinyin # 自定义tag luna_pinyin
     - fallback_segmentor
   translators:
     - punct_translator
@@ -72,12 +84,72 @@ engine:
     - table_translator@custom_phraseYH
     - lua_translator@calculator_translator
   filters:
-    - lua_filter@core #lua精准过滤，必须放到engine/filters:滤镜第一行2021年08月24日
-    - simplifier@emoji_suggestion #表情
-    - simplifier@symbol_support #符号支持
+#    - lua_filter@core #lua精准过滤，必须放到engine/filters:滤镜第一行2021年08月24日
     - simplifier
     - uniquifier
+    - simplifier@emoji_suggestion #表情
+    - simplifier@symbol_support #符号支持
     - reverse_lookup_filter@reverse_lookup # 反查濾鏡
+    - simplifier@English
+
+simplifier:
+  option_name: zh_simp_s2t
+  opencc_config: s2t.json
+
+#emoji表情
+emoji_suggestion:
+  opencc_config: emoji.json
+  option_name: emoji_suggestion
+  tips: all
+  
+#symbol符号
+symbol_support:
+  opencc_config: symbol.json
+  option_name: symbol_support
+  tips: all
+
+# 简单的 English互译滤镜
+English: 
+  opencc_config: English.json
+  option_name: English
+  tips: all
+
+Semi-EN:   # 增加I模式输入中文
+  tag: Semi-EN
+  prefix: "I"
+  tips: "I模式-英语输入"
+
+# 反查濾鏡
+reverse_lookup:
+  tags: [luna_pinyin, flypydz] # 掛在翻譯器luna_pinyin和flypydz上
+  overwrite_comment: true     # 覆蓋其他提示
+  dictionary: MetaPY  # 反查所得爲MetaPY词典
+
+# 副翻译器1 小鹤反查
+flypydz:
+  tag: flypydz
+  dictionary: flypydz # 調取詞典flypydz
+  comment_format:
+   # - xform/^/〔/
+   # - xform/$/〕/
+    - xform/ / /
+
+# 副翻译器2 搜狗输入法U模式反查
+luna_pinyin:
+  tag: luna_pinyin
+  dictionary: luna_pinyin.custom  #用于反查编码的另一种输入法词库名称 
+  preedit_format:
+    - "xlit|abcdefghijklmnopqrstuvwxyz|abcdefghijklmnopqrstuvwxyz|"
+  comment_format:
+    - "xlit|abcdefghijklmnopqrstuvwxyz|abcdefghijklmnopqrstuvwxyz|"
+  prefix: "U" #反查引导符，即按下这个键后再输入另一种输入法的编码
+  suffix: "'"
+  tips: "〔U模式輸入。支持拆分(水+水+水=>淼)〕"
+#tips: "〔U模式輸入。待完善：笔画（h/横，s/竖，p/撇，n/捺，z/折），以及符号(Uubd:标点，Uuux:数学，Uudu:点数1.,Uudw:单位，Uued:俄语大写，Uuex:俄语小写，Uuku:括数(1)，Uurd:日语大写，Uurx:日语小写，uuxh:序号，uuts:特殊，uusx:数学，uujh:几何，uuzm:字母)输入〕"
+#tips: "〔V模式輸入。支持多种格式的数字(V123：一百二十三)、日期(v2016.8.8：2016年8月8日)、时间(v12:34：十二时三十四分)以及公式(V1+2：3)等的输入〕"
+# 增加八股文简化字语言模型，优化长句输入
+grammar:
+  language: zh-hans-t-essay-bgw  #自定义
 
 speller:
   alphabet: zyxwvutsrqponmlkjihgfedcba;  # alphabet：设置本 speller 需要监听的键
@@ -133,7 +205,8 @@ speller:
           # 转写：格式：xlit/<左字母表>/<右字母表>/
           # 實例：算式 xlit/abc/ABC/  運算元 abracadabra  結果 ABrACAdABrA
 # —————————以下为重点修改部分————————————————
-    - fuzz/^(\w\w)\w{1,2};{0,1}$/$1/
+    - fuzz/^(\w\w)\w{0,2};{0,1}$/$1/
+#    - fuzz/^(\w\w)\w{1,2};{0,1}$/$1/ #若在单字词典中没有两码单字，就用此行
 #    - fuzz/^(\w\w)\w{1,2}'{0,1}$/$1/
           # 利用fuzz的模糊匹配来实现利用辅助码组词并增加到候选词的功能
           # 模糊／Fuzzing : 執行派生運算；派生出的拼寫將獲得「模糊」屬性，可設定將其用作構成詞組的簡碼、但不用於輸入單字。
@@ -142,7 +215,8 @@ speller:
           # 效果：以首、尾碼爲多字母音節碼的構詞碼。
           # 註：需配合 script_translator 的選項 `translator/strict_spelling: true` 方可限定該拼寫不用於輸入單字。
 #—————————以上为重点修改部分————————————————
-    #- abbrev/^(.).+$/$1/
+#    - abbrev/^(\w\w).+$/$1/
+#    - abbrev/^(.).+$/$1/
           # 縮略／Abbreviation : 執行派生運算；派生出的拼寫將獲得「縮略」屬性，會在音節切分時與通常的拼寫做區分處理。
           # 格式：abbrev/<模式>/<替換式>/
           # 實例：算式 abbrev/^([a-z]).+$/$1/
@@ -155,15 +229,16 @@ translator:
 
 custom_phraseVD: #置顶词典
   dictionary: ""
-  user_dict: flypy_top
-  db_class: stabledb
-  enable_sentence: false
-  enable_completion: false
+  user_dict: MetaPY_top     #设定用户词典名
+  db_class: stabledb           #设定用户词典类型，可设 tabledb〔文本〕或 userdb〔二进制〕
+  enable_sentence: false       #是否开启自动造句〔true 或 false〕
+  enable_completion: false     #提前显示尚未输入完整码的字〔true 或 false〕
   initial_quality: 0 #用户词和系统词重码 置顶
-  
+  #initial_quality:设定此翻译器结果优先级，如果想要自定义的词排在前面，这个值尽量设大一点
+
 custom_phraseXT: #系统词典
   dictionary: ""
-  user_dict: flypy_sys
+  user_dict: MetaPY_sys
   db_class: stabledb
   enable_sentence: false
   enable_completion: false
@@ -171,58 +246,11 @@ custom_phraseXT: #系统词典
 
 custom_phraseYH: #用户词典
   dictionary: ""
-  user_dict: flypy_user
+  user_dict: MetaPY_user
   db_class: stabledb
   enable_sentence: false
   enable_completion: false
   initial_quality: -1 #用户词和系统词重码居后
-
-simplifier:
-  option_name: zh_simp_s2t
-  opencc_config: s2t.json
-  
-#emoji表情
-emoji_suggestion:
-  opencc_config: emoji.json
-  option_name: emoji_suggestion
-  tips: all
-  
-#symbol符号
-symbol_support:
-  opencc_config: symbol.json
-  option_name: symbol_support
-  tips: all
-
-Semi-EN:   # 增加I模式输入中文
-  tag: Semi-EN
-  prefix: "I"
-  tips: "I模式-英语输入"
-
-# 副翻译器1 反查
-flypydz:
-  tag: flypydz
-  dictionary: flypydz # 調取詞典flypydz
-  comment_format:
-   # - xform/^/〔/
-   # - xform/$/〕/
-    - xform/ / /
-
-luna_pinyin:
-  tag: luna_pinyin
-  dictionary: luna_pinyin.custom  #用于反查编码的另一种输入法词库名称 
-  preedit_format:
-    - "xlit|abcdefghijklmnopqrstuvwxyz|abcdefghijklmnopqrstuvwxyz|"
-  comment_format:
-    - "xlit|abcdefghijklmnopqrstuvwxyz|abcdefghijklmnopqrstuvwxyz|"
-  prefix: "U" #反查引导符，即按下这个键后再输入另一种输入法的编码
-  suffix: "'"
-  tips: "〔U模式-搜狗拆字全拼反查〕"
-
-# 反查濾鏡
-reverse_lookup:
-  tags: [luna_pinyin, flypydz] # 掛在翻譯器luna_pinyin和flypydz上
-  overwrite_comment: true     # 覆蓋其他提示
-  dictionary: MetaPY  # 反查所得爲MetaPY词典
 
 # 由于标点（punctuator）和按键（key_binder）导入预设(import_preset:)的对象均为default(.yaml)；
 # 如果在default.custom.yaml中为标点（punctuator）和按键（key_binder）打补丁，补丁会直接覆盖default.yaml中的设置，从而丢失部分预设。
@@ -230,7 +258,7 @@ reverse_lookup:
 punctuator:
   import_preset: default
   full_shape:
-#    "`": "｀"
+    "`": "｀"
     "~": "～"
     "!": "！"
     "@": "＠"
@@ -261,7 +289,7 @@ punctuator:
     ">": "》"
     "?": "？"
   half_shape:
-#    "`": "·"
+    "`": "·"
     "~": "～"
     "!": "！"
     "@": "@"
@@ -295,6 +323,21 @@ punctuator:
 key_binder:
   import_preset: default
 
+ascii_composer: # 设置caps、shift、control等键的作用
+  good_old_caps_lock: true # 若为true，caps只切换大小写
+  switch_key:
+    Shift_L: commit_text   # 左 Shift 切换直接上屏字母
+    Shift_R: commit_text   # 右 Shift 切换直接上屏字母
+    Control_L: noop
+    Control_R: noop
+    Caps_Lock: commit_text
+    Eisu_toggle: clear
+# 可選的臨時切換策略有三：
+# inline_ascii 在輸入法的臨時西文編輯區內輸入字母、數字、符號、空格等，回車上屏後自動復位到中文
+# commit_text 已輸入的候選文字上屏並切換至西文輸入模式
+# commit_code 已輸入的編碼字符上屏並切換至西文輸入模式
+# 設爲 noop，屏蔽該切換鍵
+
 recognizer:
   import_preset: default
   patterns:
@@ -302,8 +345,8 @@ recognizer:
     expression: "^=.*$" #启用计算器=号引导
     punct: "^/([0-9]0?|[a-z]+)$" #特殊符号引导
     flypydz: "[a-z`]*`+[a-z`]*" #小鹤双拼反查
+    Semi-EN: "^I.*$"
+    luna_pinyin: "U[a-z]*'?$"
     #uppercase: "[A-Z][-_+.'0-9A-Za-z]*$"
     uppercase: "" #中文状态大写锁定直接上屏
     url: "^(www[.]|https?:|ftp[.:]|mailto:|file:).*$|^[a-z]+[.].+$"
-    Semi-EN: "^I.*$"
-    luna_pinyin: "U[a-z]*'?$"
