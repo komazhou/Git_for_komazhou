@@ -205,7 +205,7 @@ speller:
           # 转写：格式：xlit/<左字母表>/<右字母表>/
           # 實例：算式 xlit/abc/ABC/  運算元 abracadabra  結果 ABrACAdABrA
 # —————————以下为重点修改部分————————————————
-    - fuzz/^(\w\w)\w{0,2};{0,1}$/$1/
+    - fuzz/^(\w\w)\w{0,2}[;']?$/$1/
 #    - fuzz/^(\w\w)\w{1,2};{0,1}$/$1/ #若在单字词典中没有两码单字，就用此行
 #    - fuzz/^(\w\w)\w{1,2}'{0,1}$/$1/
           # 利用fuzz的模糊匹配来实现利用辅助码组词并增加到候选词的功能
@@ -323,15 +323,15 @@ punctuator:
 key_binder:
   import_preset: default
 
-ascii_composer: # 设置caps、shift、control等键的作用
-  good_old_caps_lock: true # 若为true，caps只切换大小写
-  switch_key:
-    Shift_L: commit_text   # 左 Shift 切换直接上屏字母
-    Shift_R: commit_text   # 右 Shift 切换直接上屏字母
-    Control_L: noop
-    Control_R: noop
-    Caps_Lock: commit_text
-    Eisu_toggle: clear
+#ascii_composer: # 设置caps、shift、control等键的作用
+#  good_old_caps_lock: true # 若为true，caps只切换大小写
+#  switch_key:
+#    Shift_L: commit_text   # 左 Shift 切换直接上屏文字
+#    Shift_R: commit_text   # 右 Shift 切换直接上屏文字
+#    Control_L: noop
+#    Control_R: noop
+#    Caps_Lock: commit_text
+#    Eisu_toggle: clear
 # 可選的臨時切換策略有三：
 # inline_ascii 在輸入法的臨時西文編輯區內輸入字母、數字、符號、空格等，回車上屏後自動復位到中文
 # commit_text 已輸入的候選文字上屏並切換至西文輸入模式
