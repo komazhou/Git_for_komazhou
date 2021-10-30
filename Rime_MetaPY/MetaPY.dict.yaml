@@ -20,13 +20,13 @@ use_preset_vocabulary: false
 
 import_tables:
   - luna_pinyin	#这个是默认使用的明月拼音，用于输入规则正则转换全码后匹配［八股文］的单字；在本方案中原则上必须开启，但大部分常用单字已经在本字典中，可开启亦不开启
-  - clover.phrase	#四叶草的词组词库
-  - THUOCL_chengyu	#成语词汇
-  - THUOCL_IT	#计算机词汇
-  - THUOCL_lishimingren	#历史名人词汇
-  - MetaPY.Patent	#专利词库
-  - ChangYong	#现代汉语常用词表
-  - luna_pinyin.city_chongqing
+  - Extend_dict/clover.phrase	#四叶草的词组词库
+  - Extend_dict/THUOCL_chengyu	#成语词汇
+  - Extend_dict/THUOCL_IT	#计算机词汇
+  - Extend_dict/THUOCL_lishimingren	#历史名人词汇
+  - Extend_dict/MetaPY.Patent	#专利词库
+  - Extend_dict/ChangYong	#现代汉语常用词表
+  - Extend_dict/luna_pinyin.city_chongqing
 
 ...
 的	de	579392145
