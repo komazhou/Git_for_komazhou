@@ -108,7 +108,7 @@ preset_keyboards:
       - { click: switcht9, label: "123", width: 18}
       - {click: english, width: 12}
       - {click: space, width: 40}
-      - {click: "，", label: ",.", swipe_up: "。", swipe_down: commit。, width: 12}
+      - {click: "，", label: ",.", swipe_up: "。", swipe_down: ".", width: 12}
       - {click: Return, width: 18}
     width: 10
 
@@ -167,56 +167,42 @@ preset_keyboards:
   #自定义9宫格数字键盘
   T9_number:
     ascii_mode: 0
-    author: "Hui"
+    author: "Qiao"
     height: *jpgd2
     horizontal_gap: *jpgd10
     vertical_gap: *jpgd9
     round_corner: *jpgd4
-    #现在只支持配置click,swipe_up,swipe_down键盘
     keys:
-    keys:
-      # 第一行
-      - {click: 1, swipe_up: "壹", swipe_down: "Ⅰ"}
-      - {click: 2, swipe_up: "贰", swipe_down: "Ⅱ"}
-      - {click: 3, swipe_up: "叁", swipe_down: "Ⅲ"}
-      - {click: 4, swipe_up: "肆", swipe_down: "Ⅳ"}
-      - {click: 5, swipe_up: "伍", swipe_down: "Ⅴ"}
-      - {click: 6, swipe_up: "陆", swipe_down: "Ⅵ"}
-      - {click: 7, swipe_up: "柒", swipe_down: "Ⅶ"}
-      - {click: 8, swipe_up: "捌", swipe_down: "Ⅷ"}
-      - {click: 9, swipe_up: "玖", swipe_down: "Ⅸ"}
-      - {click: 0, swipe_up: "零", swipe_down: "Ⅹ"}
-      #第二行
-      - { click: "[", label: "[", swipe_up: "【", swipe_down: "【" }
-      - { click: "]", label: "]", swipe_up: "】", swipe_down: "】" }
-      - { click: "{", label: "{", swipe_up: "｛", swipe_down: "｛" }
-      - { click: "}", label: "}", swipe_up: "｝", swipe_down: "｝" }
-      - { click: "#", label: "#", swipe_up: "#", swipe_down: "#" }
-      - { click: "%", label: "%", swipe_up: "%", swipe_down: "%" }
-      - { click: "^", label: "^", swipe_up: "……", swipe_down: "……" }
-      - { click: "*", label: "*", swipe_up: "*", swipe_down: "*" }
-      - { click: "+", label: "+", swipe_up: "+", swipe_down: "+" }
-      - { click: "=", label: "=", swipe_up: "=", swipe_down: "=" }
-      # 第三行
-      #- { click: Shift, width: 14 }
-      - { width: 15 }
-      - {click: "<", label: "<", swipe_up: "《", swipe_down: "《"}
-      - {click: ">", label: ">", swipe_up: "》", swipe_down: "》"}
-      - {click: "-", label: "-", swipe_up: "_", swipe_down: "_"}
-      - {click: "/", label: "/", swipe_up: "|", swipe_down: "|"}
-      - {click: "(", label: "(", swipe_up: "（", swipe_down: "（"}
-      - {click: ")", label: ")", swipe_up: "）", swipe_down: "）"}
-      - {click: "!", label: "!", swipe_up: "！", swipe_down: "！"}
-      - { width: 1 }
-      - { click: BackSpace, width: 14 }
-      #第四行
-      - {click: DefaultKeyboard, width: 25}
-      #- { click: DefaultKeyboard, width: 25 }
-      - {click: space, width: 45}
-      - {click: ".", label: ".", width: 12}
-      - {click: Return, width: 18}
+      - { click: commit←, width: 16 } # "符"
+      - { click: Plus, swipe_up: "（", swipe_down: "", width: 10 } # +
+      - { click: 1, swipe_up: "一", swipe_down: "壹", width: 18 }
+      - { click: 2, swipe_up: "二", swipe_down: "贰", width: 18 }
+      - { click: 3, swipe_up: "三", swipe_down: "叁", width: 18 }
+      - { click: BackSpace, width: 20 } # ↞
+
+      - { click: commit→, width: 16 }
+      - { click: Minus, swipe_up: "）", swipe_down: "", width: 10 } # -
+      - { click: 4, swipe_up: "四", swipe_down: "肆", width: 18 }
+      - { click: 5, swipe_up: "五", swipe_down: "伍", width: 18 }
+      - { click: 6, swipe_up: "六", swipe_down: "陆", width: 18 }
+      - { click: Equalsign, width: 20 } # =
+
+      - { click: .symbols, width: 16 }
+      - { click: Multiply, swipe_up: "{", swipe_down: "", width: 10 } # *
+      - { click: 7, swipe_up: "七", swipe_down: "柒", width: 18 }
+      - { click: 8, swipe_up: "八", swipe_down: "捌", width: 18 }
+      - { click: 9, swipe_up: "九", swipe_down: "玖", width: 18 }
+      - { click: Per, width: 20 } # At=>@  Per=>%  Clear=>重输
+
+      - { click: Back, width: 16 }
+      - { click: DivisionSign, swipe_up: "}", swipe_down: "壹", width: 10 }
+      - { click: "^", width: 18 }
+      - { click: 0, swipe_up: "零", width: 18 }
+      - { click: ., width: 18 } #
+      - { click: Return, width: 20 }
+
+    name: "计算器键盘"
     width: 10
-    name: "苹果数字键盘"
 
 preset_keys:
   # 键盘类型需要在这里跳转，目前只支持下面的配置。
