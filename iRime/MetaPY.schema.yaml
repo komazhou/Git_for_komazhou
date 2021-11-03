@@ -1,0 +1,352 @@
+# Rime schema
+# encoding: utf-8
+# 方案详解参考：https://github.com/LEOYoon-Tsaw/Rime_collections/blob/master/Rime_description.md
+# 基于全拼方案
+# 感谢fkxxyz提供的词库支持 - https://www.fkxxyz.com
+
+schema:
+  name: "元拼" #基于小鹤双拼和小鹤形码"
+  schema_id: MetaPY
+  version: "1.0"
+  author:
+    - Rime schema by 佛振 <chen.sst@gmail.com>
+    - flypy layout by 鶴
+    - MetaPY layout by 周辉〈komazhou630@gmail.com>
+  description: |
+    基于朙月拼音下的小鶴雙拼方案
+    特点：
+      1、增加小鹤形码辅助组词和造句。
+      2、保留小鹤原生反查方案。
+      3、增加搜狗输入法的U模式反查生词。
+      4、增加emoji 表情支持
+      5、增加特殊符号的输入支持
+      6、增加四叶草方案词库，感谢fkxxyz提供的词库支持 - https://www.fkxxyz.com
+  dependencies:    # 如果本方案依賴於其它方案〔通常來說會依頼其它方案做爲反查，抑或是兩種或多種方案混用時〕
+    - luna_pinyin
+#    - core   #添加core.schema.yaml， 调用lua精准过滤生僻字2021年08月24日
+
+
+switches:
+  - name: ascii_mode
+    reset: 0 #默认中文编码
+    states: [ 中, 英 ]
+  - name: zh_simp_s2t
+    reset: 0 #默认简体汉字 0为下方中括号内的左项,1为右项
+    states: [ 汉字, 漢字 ]
+  - name: full_shape
+    reset: 0
+    states: [ 半, 全 ]
+  - name: emoji_suggestion
+    reset: 1
+    states: [ "😭️", "😄️" ]
+  - name: symbol_support
+    reset: 1
+    states: [ "无符", "符" ]
+  - name: ascii_punct
+    reset: 0
+    states: [ 。，, ．， ]
+  - name: English              #简单English互译滤镜
+    reset: 0                        #默认1，常用
+    states: ["EN_关", "EN_开"]
+#  - name: extended_char             # lua精准过滤生僻字，控制开关
+#    reset: 1                        #默认1，常用
+#    states: ["超集", "常用"]
+
+engine:
+  processors:
+    - ascii_composer
+    - recognizer  #缺少这个会导致lua计算器无法使用
+    - key_binder
+    - speller
+    - punctuator
+    - selector
+    - navigator
+    - express_editor
+#    - lua_processor@select_character_processor  # 添加 以词定句
+  segmentors:
+    - ascii_segmentor
+    - matcher
+    - abc_segmentor
+    - punct_segmentor
+    - affix_segmentor@Semi-EN
+    - affix_segmentor@flypydz # 自定义tag flypydz
+    - affix_segmentor@luna_pinyin # 自定义tag luna_pinyin
+    - fallback_segmentor
+  translators:
+    - punct_translator
+#    - reverse_lookup_translator
+    - script_translator
+    - script_translator@flypydz #用于反查的flypydz翻译器
+    - script_translator@luna_pinyin #用于反查的luna_pinyin翻译器
+    - lua_translator@date_translator # 添加 调用Rime-lua插件，自定义系统变量输出日期、星期、时间类型输出
+    - table_translator@custom_phraseVD
+    - table_translator@custom_phraseXT
+    - table_translator@custom_phraseYH
+    - lua_translator@calculator_translator
+  filters:
+#    - lua_filter@core #lua精准过滤，必须放到engine/filters:滤镜第一行2021年08月24日
+    - simplifier
+    - uniquifier
+    - simplifier@emoji_suggestion #表情
+    - simplifier@symbol_support #符号支持
+    - reverse_lookup_filter@reverse_lookup # 反查濾鏡
+    - simplifier@English
+
+simplifier:
+  option_name: zh_simp_s2t
+  opencc_config: s2t.json
+
+#emoji表情
+emoji_suggestion:
+  opencc_config: emoji.json
+  option_name: emoji_suggestion
+  tips: all
+  
+#symbol符号
+symbol_support:
+  opencc_config: symbol.json
+  option_name: symbol_support
+  tips: all
+
+# 简单的 English互译滤镜
+English: 
+  opencc_config: English.json
+  option_name: English
+  tips: all
+
+Semi-EN:   # 增加I模式输入中文
+  tag: Semi-EN
+  prefix: "I"
+  tips: "I模式-英语输入"
+
+# 反查濾鏡
+reverse_lookup:
+  tags: [luna_pinyin, flypydz] # 掛在翻譯器luna_pinyin和flypydz上
+  overwrite_comment: true     # 覆蓋其他提示
+  dictionary: MetaPY  # 反查所得爲MetaPY词典
+
+# 副翻译器1 小鹤反查
+flypydz:
+  tag: flypydz
+  dictionary: flypydz # 調取詞典flypydz
+  comment_format:
+   # - xform/^/〔/
+   # - xform/$/〕/
+    - xform/ / /
+
+# 副翻译器2 搜狗输入法U模式反查
+luna_pinyin:
+  tag: luna_pinyin
+  dictionary: luna_pinyin.custom  #用于反查编码的另一种输入法词库名称 
+  preedit_format:
+    - "xlit|abcdefghijklmnopqrstuvwxyz|abcdefghijklmnopqrstuvwxyz|"
+  comment_format:
+    - "xlit|abcdefghijklmnopqrstuvwxyz|abcdefghijklmnopqrstuvwxyz|"
+  prefix: "U" #反查引导符，即按下这个键后再输入另一种输入法的编码
+  suffix: "'"
+  tips: "〔U模式輸入。支持拆分(水+水+水=>淼)〕"
+#tips: "〔U模式輸入。待完善：笔画（h/横，s/竖，p/撇，n/捺，z/折），以及符号(Uubd:标点，Uuux:数学，Uudu:点数1.,Uudw:单位，Uued:俄语大写，Uuex:俄语小写，Uuku:括数(1)，Uurd:日语大写，Uurx:日语小写，uuxh:序号，uuts:特殊，uusx:数学，uujh:几何，uuzm:字母)输入〕"
+#tips: "〔V模式輸入。支持多种格式的数字(V123：一百二十三)、日期(v2016.8.8：2016年8月8日)、时间(v12:34：十二时三十四分)以及公式(V1+2：3)等的输入〕"
+# 增加八股文简化字语言模型，优化长句输入
+grammar:
+  language: zh-hans-t-essay-bgw  #自定义
+
+speller:
+  alphabet: zyxwvutsrqponmlkjihgfedcba;  # alphabet：设置本 speller 需要监听的键
+  initials: zyxwvutsrqponmlkjihgfedcba  # initials：设置哪些键仅在开头的时候才需要监听
+#  finals: ;  # finals：设置哪些键仅在末尾的时候才需要监听
+  # delimiter：分词符
+  delimiter: " '"
+  algebra:  # algebra：Rime 核心的拼写运算规则，所有 algebra 算出的规则最后写入 prism
+    - erase/^xx$/
+          # 消除／Erasion : 若拼寫與<模式> 完全匹配，則將該拼寫從有效拼寫集合中消除。
+          # 格式：erase/<模式>/
+          # 實例：算式 erase/^.*\d$/  運算元dang1結果 帶聲調的拼音不再可用
+    - derive/^([jqxy])u$/$1v/    # 派生：将输入ju和jv等效；将输入qu和qv等效；将输入xu和xv等效；将输入yu和yv等效，次出的u和v均对应拼音中的ü
+    - derive/^([aoe])([ioun])$/$1$1$2/    # 派生：将编码为ai\ao\au\an\oi\oo\ou\on\ei\eo\eu\en对应派生出aai\aao\aau\aan\ooi\ooo\oou\oon\eei\eeo\eeu\een的等效编码。
+          # 派生／Derivation : 若對拼寫做正則模式匹配、替換而獲得了新的拼寫，則有效拼寫集合同時包含派生前後的拼寫；否則僅保留原拼寫。
+          # 格式：derive/<模式>/<替換式>/
+          # 實例一：算式 derive/^([nl])ue$/$1ve/  運算元 nue  結果 nve
+          # 效果：輸入nve或nue(lve或lue)均可獲得源碼表中與編碼nue(lue)對應的候選
+          # 實例二：算式 derive/^[nl](.*)$/l$1/  運算元 na  結果 la
+          # 效果：輸入la可獲得源碼表中與編碼na、la對應的候選；輸入na，候選仍爲碼表中編碼爲na的候選
+    - xform/^([aoe])(ng)?$/$1$1$2/    # 变形：将编码为ang、ong和eng变形为aang、oong和eeng后便于双拼分割；
+    - xform/iu$/Q/                    # 变形：将“iu”结尾的编码变形为大写“Q”结尾的编码；用于双拼韵母
+    - xform/(.)ei$/$1W/               # 变形：将“ei”结尾的编码变形为大写“W”结尾的编码；用于双拼韵母；同时排除编码为ei的字
+    - xform/uan$/R/                   # 变形：将“uan”结尾的编码变形为大写“R”结尾的编码；用于双拼韵母
+    - xform/[uv]e$/T/                 # 变形：将“ue”和“ve”结尾的编码变形为大写“T”结尾的编码；用于双拼韵母
+    - xform/un$/Y/                    # 变形：将“un”结尾的编码变形为大写“Y”结尾的编码；用于双拼韵母
+    - xform/^sh/U/                    # 变形：将双声母“sh”的编码变形为大写“U”；用于双拼的双声母
+    - xform/^ch/I/                    # 变形：将双声母“ch”的编码变形为大写“I”；用于双拼的双声母
+    - xform/^zh/V/                    # 变形：将双声母“zh”的编码变形为大写“V”；用于双拼的双声母
+    - xform/uo$/O/                    # 变形：将uo”结尾的编码变形为大写“O”结尾的编码；用于双拼韵母
+    - xform/ie$/P/                    # 变形：将“ie”结尾的编码变形为大写“P”结尾的编码；用于双拼韵母
+    - xform/i?ong$/S/                 # 变形：将“iong”和“ong”结尾的编码变形为大写“S”结尾的编码；用于双拼韵母
+    - xform/ing$|uai$/K/              # 变形：将“ing”和“uai”结尾的编码变形为大写“K”结尾的编码；用于双拼韵母
+    - xform/(.)ai$/$1D/               # 变形：将“ai”结尾的编码变形为大写“D”结尾的编码；用于双拼韵母；同时排除编码为ai的字
+    - xform/(.)en$/$1F/               # 变形：将“en”结尾的编码变形为大写“F”结尾的编码；用于双拼韵母；同时排除编码为en的字
+    - xform/(.)eng$/$1G/              # 变形：将“eng”结尾的编码变形为大写“G”结尾的编码；用于双拼韵母；同时排除编码为eng的字
+    - xform/[iu]ang$/L/               # 变形：将“iang”和“uang”结尾的编码变形为大写“L”结尾的编码；用于双拼韵母
+    - xform/(.)ang$/$1H/              # 变形：将“ang”结尾的编码变形为大写“H”结尾的编码；用于双拼韵母；同时排除编码为ang的字
+    - xform/ian$/M/                   # 变形：将“ian”结尾的编码变形为大写“M”结尾的编码；用于双拼韵母
+    - xform/(.)an$/$1J/               # 变形：将“an”结尾的编码变形为大写“J”结尾的编码；用于双拼韵母；同时排除编码为an的字
+    - xform/(.)ou$/$1Z/               # 变形：将“ou”结尾的编码变形为大写“Z”结尾的编码；用于双拼韵母；同时排除编码为ou的字
+    - xform/[iu]a$/X/                 # 变形：将“ia”和“ua”结尾的编码变形为大写“X”结尾的编码；用于双拼韵母
+    - xform/iao$/N/                   # 变形：将“iao”结尾的编码变形为大写“N”结尾的编码；用于双拼韵母
+    - xform/(.)ao$/$1C/               # 变形：将“ao”结尾的编码变形为大写“C”结尾的编码；用于双拼韵母；同时排除编码为ao的字
+    - xform/ui$/V/                    # 变形：将“ui”结尾的编码变形为大写“V”结尾的编码；用于双拼韵母
+    - xform/in$/B/                    # 变形：将“in”结尾的编码变形为大写“B”结尾的编码；用于双拼韵母
+          # 变形：變形／Transformation : 若拼寫（或其子串）與<模式>匹配，則將所匹配的部份改寫爲<替換式>；否則拼寫保持不變。模式、替換式遵循Perl正則表達式語法
+          # 格式：xform/<模式>/<替換式>/
+          # 實例：算式 xform/^([nl])ue$/$1ve/  運算元 nue  結果 nve
+          # 效果：輸入nve(lve)可以獲得源碼表中與編碼nue(lue)對應的候選；輸入nue(lue)無候選
+    - xlit/QWRTYUIOPSDFGHJKLZXCVBNM/qwrtyuiopsdfghjklzxcvbnm/
+          # 轉寫／Transliteration : 依次將拼寫中見於<左字母表>的字符替換爲<右字母表>對應位置的字符。左、右字母表應包含相同數目的Unicode字符。
+          # 转写：格式：xlit/<左字母表>/<右字母表>/
+          # 實例：算式 xlit/abc/ABC/  運算元 abracadabra  結果 ABrACAdABrA
+# —————————以下为重点修改部分————————————————
+    - fuzz/^(\w\w)\w{0,2}[;']?$/$1/
+#    - fuzz/^(\w\w)\w{1,2};{0,1}$/$1/ #若在单字词典中没有两码单字，就用此行
+#    - fuzz/^(\w\w)\w{1,2}'{0,1}$/$1/
+          # 利用fuzz的模糊匹配来实现利用辅助码组词并增加到候选词的功能
+          # 模糊／Fuzzing : 執行派生運算；派生出的拼寫將獲得「模糊」屬性，可設定將其用作構成詞組的簡碼、但不用於輸入單字。
+          # 格式：fuzz/<模式>/<替換式>/
+          # 實例：算式 fuzz/^([a-z]).+([a-z])$/$1$2/
+          # 效果：以首、尾碼爲多字母音節碼的構詞碼。
+          # 註：需配合 script_translator 的選項 `translator/strict_spelling: true` 方可限定該拼寫不用於輸入單字。
+#—————————以上为重点修改部分————————————————
+#    - abbrev/^(\w\w).+$/$1/
+#    - abbrev/^(.).+$/$1/
+          # 縮略／Abbreviation : 執行派生運算；派生出的拼寫將獲得「縮略」屬性，會在音節切分時與通常的拼寫做區分處理。
+          # 格式：abbrev/<模式>/<替換式>/
+          # 實例：算式 abbrev/^([a-z]).+$/$1/
+          # 效果：以首字母爲多字母音節碼的縮寫。
+translator:
+  dictionary: MetaPY  # dictionary：翻译器使用的字典名,指定字典
+  # prism：设定此翻译器的 speller 生成的棱镜文件名，或此副编译器调用的棱镜名
+  prism: MetaPY    # prism 要以本輸入方案的名稱來命名，以免把朙月拼音的拼寫映射表覆蓋掉
+  preedit_format: {} # 這段代碼用來將輸入的雙拼碼反轉爲全拼顯示；待見雙拼碼的可以把這段拿掉
+
+custom_phraseVD: #置顶词典
+  dictionary: ""
+  user_dict: MetaPY_top     #设定用户词典名
+  db_class: stabledb           #设定用户词典类型，可设 tabledb〔文本〕或 userdb〔二进制〕
+  enable_sentence: false       #是否开启自动造句〔true 或 false〕
+  enable_completion: false     #提前显示尚未输入完整码的字〔true 或 false〕
+  initial_quality: 0 #用户词和系统词重码 置顶
+  #initial_quality:设定此翻译器结果优先级，如果想要自定义的词排在前面，这个值尽量设大一点
+
+custom_phraseXT: #系统词典
+  dictionary: ""
+  user_dict: MetaPY_sys
+  db_class: stabledb
+  enable_sentence: false
+  enable_completion: false
+  initial_quality: -1 #本表词和系统词重码居后
+
+custom_phraseYH: #用户词典
+  dictionary: ""
+  user_dict: MetaPY_user
+  db_class: stabledb
+  enable_sentence: false
+  enable_completion: false
+  initial_quality: -1 #用户词和系统词重码居后
+
+# 由于标点（punctuator）和按键（key_binder）导入预设(import_preset:)的对象均为default(.yaml)；
+# 如果在default.custom.yaml中为标点（punctuator）和按键（key_binder）打补丁，补丁会直接覆盖default.yaml中的设置，从而丢失部分预设。
+# 最好的解决办法就是单独对输入方案打补丁。
+punctuator:
+  import_preset: default
+  full_shape:
+    "`": "｀"
+    "~": "～"
+    "!": "！"
+    "@": "＠"
+    "#": "＃"
+    "$": "￥"
+    "%": "％"
+    "^": "……"
+    "&": "＆"
+    "*": "*"
+    "(": "（"
+    ")": "）"
+    "_": "——"
+    "+": "＋"
+    "-": "－"
+    "=": "＝"
+    "[": "【"
+    "]": "】"
+    "{": "｛"
+    "}": "｝"
+    "|": "｜"
+    "\\": "、"
+    "/": "、"
+    ";": "；"
+    "'": "‘"
+    ",": "，"
+    ".": "。"
+    "<": "《"
+    ">": "》"
+    "?": "？"
+  half_shape:
+    "`": "·"
+    "~": "～"
+    "!": "！"
+    "@": "@"
+    "#": "#"
+    "$": "￥"
+    "%": "%"
+    "^": "……"
+    "&": "&"
+    "*": "*"
+    "(": "（"
+    ")": "）"
+    "_": "——"
+    "+": "+"
+    "-": "-"
+    "=": "="
+    "[": "【"
+    "]": "】"
+    "{": "｛"
+    "}": "｝"
+    "|": "｜"
+    "\\": "、"
+    "/": "、"
+    ";": "；"
+    "'": "’"
+    ",": "，"
+    ".": "。"
+    "<": "《"
+    ">": "》"
+    "?": "？"
+
+key_binder:
+  import_preset: default
+
+#ascii_composer: # 设置caps、shift、control等键的作用
+#  good_old_caps_lock: true # 若为true，caps只切换大小写
+#  switch_key:
+#    Shift_L: commit_text   # 左 Shift 切换直接上屏文字
+#    Shift_R: commit_text   # 右 Shift 切换直接上屏文字
+#    Control_L: noop
+#    Control_R: noop
+#    Caps_Lock: commit_text
+#    Eisu_toggle: clear
+# 可選的臨時切換策略有三：
+# inline_ascii 在輸入法的臨時西文編輯區內輸入字母、數字、符號、空格等，回車上屏後自動復位到中文
+# commit_text 已輸入的候選文字上屏並切換至西文輸入模式
+# commit_code 已輸入的編碼字符上屏並切換至西文輸入模式
+# 設爲 noop，屏蔽該切換鍵
+
+recognizer:
+  import_preset: default
+  patterns:
+    email: "^[A-Za-z][-_.0-9A-Za-z]*@.*$"
+    expression: "^=.*$" #启用计算器=号引导
+    punct: "^/([0-9]0?|[a-z]+)$" #特殊符号引导
+    flypydz: "[a-z`]*`+[a-z`]*" #小鹤双拼反查
+    Semi-EN: "^I.*$"
+    luna_pinyin: "U[a-z]*'?$"
+    #uppercase: "[A-Z][-_+.'0-9A-Za-z]*$"
+    uppercase: "" #中文状态大写锁定直接上屏
+    url: "^(www[.]|https?:|ftp[.:]|mailto:|file:).*$|^[a-z]+[.].+$"
