@@ -18,7 +18,7 @@ patch:
     good_old_caps_lock: true # 若为true，caps只切换大小写
     switch_key:
       Shift_L: commit_code   # 左 Shift 切换直接上屏字母
-      Shift_R: noop #commit_code   # 右 Shift 切换直接上屏字母
+      Shift_R: commit_code   # 右 Shift 切换直接上屏字母
       Control_L: noop
       Control_R: noop
       Caps_Lock: commit_code

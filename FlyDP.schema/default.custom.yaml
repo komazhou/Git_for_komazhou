@@ -10,10 +10,10 @@ patch:
     - Control+Shift+F4
     - Control+Shift+grave
   schema_list:
-    - schema: FlyDP # 小鹤双拼+形辅
-    - schema: flypy_double
-    - schema: double_pinyin_xnhedn # 小鹤双拼+辅助码
-    - schema: double_pinyin_flypy # 小鹤双拼+辅助码
+    - schema: MetaPY #元拼 base 小鹤双拼+形辅
+    #- schema: flypy_double
+    #- schema: double_pinyin_xnhedn # 小鹤双拼+辅助码
+    #- schema: double_pinyin_flypy # 小鹤双拼+辅助码
   ascii_composer: # 设置caps、shift、control等键的作用
     good_old_caps_lock: true # 若为true，caps只切换大小写
     switch_key:

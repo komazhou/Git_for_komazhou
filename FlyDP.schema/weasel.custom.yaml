@@ -36,10 +36,10 @@ patch:
 
   # 以下修改皮肤
 #设置 style:
-  "style/color_scheme": Wii2	# 设定配色方案的名称
+  "style/color_scheme": Mxy	# 设定配色方案的名称
   'style/display_tray_icon': false	# 显示托盘图标，开启（true）；关闭（false），默认false
   style/font_face: "Microsoft YaHei"	# 设定配色方案的字体；可用"黑体"，默认为"Microsoft YaHei"
-  style/font_point: 12	# 设定配色方案的字体大小，默认14
+  style/font_point: 10	# 设定配色方案的字体大小，默认14
   style/fullscreen: false	# 全屏输入，即候选窗口占满整个屏幕，默认false
   style/horizontal: false	# 候选窗是否横排，true横排，false竖排，默认false
   style/inline_preedit: true	# TSF嵌入模式，正在输入的编码将嵌入到光标焦点处（仅支持TSF），默认false
@@ -181,21 +181,6 @@ patch:
       #hilited_back_color: 0x000000      # 高亮候選項的文字顏色，要醒目！
       hilited_candidate_text_color: 0xFFFFFF      # 高亮候選項的底色，若與背景色不同就會顯出光棒
       hilited_candidate_back_color: 0xED9564
-
-    Wii2:
-      name: Wii2
-      author: PYatoo
-      back_color: 0xefefef
-      border_color: 0xefefef
-      text_color: 0x575759
-      hilited_text_color: 0xED9564
-      hilited_back_color: 0xefefef
-      hilited_candidate_text_color: 0xffffff
-      hilited_candidate_back_color: 0xED9564
-      candidate_text_color: 0x575759
-      comment_text_color: 0xcac9c8
-      hilited_comment_text_color: 0xffffff
-      label_color: 0xcac9c8
 
     "ps4":  #設此方案爲默認方案。
       name: "遊驛四／ps4"  #方案名。中文西文皆可。
