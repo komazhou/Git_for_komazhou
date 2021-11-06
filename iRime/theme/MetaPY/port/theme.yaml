@@ -29,6 +29,7 @@ hide:
   &hide true #false不显示候选窗或true显示候选窗
 
 style:
+  sound: "10_key_press_click.caf"  
   candidate_font_size: 20 #修改栏字体大小
   inline_preedited_text_font_size: 40
   common_preedited_text_font_size: 14
