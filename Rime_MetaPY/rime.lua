@@ -17,15 +17,15 @@ calculator_translator = require("calculator_translator")
 
 -- 以词定字
 -- 详见 `lua/select_character.lua`
-select_character_processor = require("select_character")
+--select_character_processor = require("select_character")
 
 -- 过滤iOS无法显示的字
-core = require("core_filter")
+--core = require("core_filter")
 
 -- easy_en_enhance_filter: 连续输入增强
 -- 详见 `lua/easy_en.lua`
-local easy_en = require("easy_en")
-easy_en_enhance_filter = easy_en.enhance_filter
+--local easy_en = require("easy_en")
+--easy_en_enhance_filter = easy_en.enhance_filter
 
 -- 不使用连续输入增强
 -- 你可以在 easy_en.custom.yaml 的 patch 节点中添加选项以关闭连续输入增强功能。
@@ -131,3 +131,6 @@ function single_char_first_filter(input)
         yield(cand)
     end
 end
+
+--- 增加首选嵌入式预览
+preedit_preview = require("preedit_preview")

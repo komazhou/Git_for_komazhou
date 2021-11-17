@@ -36,7 +36,7 @@ patch:
 
   # 以下修改皮肤
 #设置 style:
-  "style/color_scheme": Mxy	# 设定配色方案的名称
+  "style/color_scheme": apathy	# 设定配色方案的名称
   'style/display_tray_icon': false	# 显示托盘图标，开启（true）；关闭（false），默认false
   style/font_face: "Microsoft YaHei"	# 设定配色方案的字体；可用"黑体"，默认为"Microsoft YaHei"
   style/font_point: 10	# 设定配色方案的字体大小，默认14
