@@ -1,8 +1,10 @@
-local function reverse_lookup_filter(input, pydb)
-  for cand in input:iter() do
-     cand:get_genuine().preedit =  cand.text
-     yield(cand)
-  end
+local function reverse_lookup_filter(input, pydb, env)
+
+  -- local commit = env.engine.context:get_commit_text()--输入的编码
+  -- for cand in input:iter() do
+  --    cand:get_genuine().preedit = cand.text
+  --    yield(cand)
+  -- end
 end
 
 --[[
@@ -15,6 +17,13 @@ local function filter(input, env)
           - name_space: 当前组件的实例名
         `env` 还可以添加其他的属性，如本例的 `pydb`。
    --]]
-   reverse_lookup_filter(input, env.pydb)
+
+  local commit = env.engine.context:get_commit_text()--输入的编码
+  for cand in input:iter() do
+    cand:get_genuine().preedit = cand.text.." [".. commit .."]"--首选+编码
+    -- cand:get_genuine().preedit = cand.text
+    yield(cand)
+  end
+  --  reverse_lookup_filter(input, env.pydb)
 end
 return filter
