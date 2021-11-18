@@ -229,7 +229,7 @@ speller:
           # 格式：fuzz/<模式>/<替換式>/
           # 實例：算式 fuzz/^([a-z]).+([a-z])$/$1$2/
           # 效果：以首、尾碼爲多字母音節碼的構詞碼。
-          # 註：需配合 script_translator 的選項 `translator/strict_spelling: true` 方可限定該拼寫不用於輸入單字。
+          # 註：需配合 script_translator 的選項 `translator/strict_spelling: true 方可限定該拼寫不用於輸入單字。
 #—————————以上为重点修改部分————————————————
 #    - abbrev/^(\w\w).+$/$1/
 #    - abbrev/^(.).+$/$1/
@@ -238,10 +238,23 @@ speller:
           # 實例：算式 abbrev/^([a-z]).+$/$1/
           # 效果：以首字母爲多字母音節碼的縮寫。
 translator:
-  dictionary: MetaPY  # dictionary：翻译器使用的字典名,指定字典
+  # enable_charset_filter: 	# 是否開啓字符集過濾〔僅table_translator有效。啓用cjk_minifier後可適用於script_translator〕
+  # disable_user_dict_for_patterns: 	# 禁止某些編碼錄入用戶詞典
+  enable_sentence: true	# 是否開啓自動造句
+  # enable_user_dict: true	# 是否開啓用戶詞典〔用戶詞典記錄動態字詞頻、用戶詞〕
+    #  以上選塡true或false
+  dictionary: MetaPY	# dictionary：翻译器使用的字典名,指定字典
   # prism：设定此翻译器的 speller 生成的棱镜文件名，或此副编译器调用的棱镜名
-  prism: MetaPY    # prism 要以本輸入方案的名稱來命名，以免把朙月拼音的拼寫映射表覆蓋掉
-  preedit_format: {} # 這段代碼用來將輸入的雙拼碼反轉爲全拼顯示；待見雙拼碼的可以把這段拿掉
+  prism: MetaPY	# prism 要以本輸入方案的名稱來命名，以免把朙月拼音的拼寫映射表覆蓋掉
+  # user_dict: 設定用戶詞典名
+  # db_class: 設定用戶詞典類型，可設tabledb〔文本〕或userdb〔二進制〕
+  # preedit_format: 上屛碼自定義 即用來將輸入的雙拼碼反轉爲全拼顯示；待見雙拼碼的可以把這段拿掉
+  #comment_format:  # 提示碼自定義
+  #  - "xlit|abcdefghijklmnopqrstuvwxyz|abcdefghijklmnopqrstuvwxyz|"
+  spelling_hints: 4 # 設定多少字以內候選標註完整帶調拼音〔僅script_translator有效〕
+  # initial_quality: 設定此翻譯器出字優先級
+  #preedit_format: {} # 這段代碼用來將輸入的雙拼碼反轉爲全拼顯示；待見雙拼碼的可以把這段拿掉
+  
 
 custom_phraseVD: #置顶词典
   dictionary: ""
