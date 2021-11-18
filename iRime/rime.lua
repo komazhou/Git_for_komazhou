@@ -131,3 +131,6 @@ function single_char_first_filter(input)
         yield(cand)
     end
 end
+
+--- 增加首选嵌入式预览
+preedit_preview = require("preedit_preview")
