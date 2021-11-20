@@ -86,7 +86,7 @@ preset_keyboards:
       - {click: a, label: A, swipe_up: "@", swipe_down: "@"}
       - {click: s, label: S, swipe_up: "#", swipe_down: "#"}
       - {click: d, label: D, swipe_up: "&", swipe_down: "&"}
-      - {click: f, label: F, swipe_up: "+", swipe_down: "+"}
+      - {click: f, label: F, swipe_up: "=", swipe_down: "+"}
       - {click: g, label: G, swipe_up: "-", swipe_down: "_"}
       - {click: h, label: H, swipe_up: "*", swipe_down: "*"}
       - {click: j, label: J, swipe_up: "/", swipe_down: "/"}
