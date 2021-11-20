@@ -16,7 +16,7 @@ author: ProudCat #作者资讯
 #键盘高度等
 height:
   1: &jpgd1 43.6 #符号键盘
-  2: &jpgd2 46 #主键盘
+  2: &jpgd2 42 #主键盘
   3: &jpgd3 41.5 #数字键盘
   4: &jpgd4 20 #主键盘圆角
   5: &jpgd5 40 #候选区高度
@@ -76,60 +76,61 @@ preset_keyboards:
     round_corner: *jpgd4
     #现在只支持配置click,swipe_up,swipe_down键盘
     keys:
-      # - {click: 1, label: "☰    ",swipe_up: "",  swipe_down: "", width: 10,height: 41.5}
-      # - {click: 2, label: "☱    ",swipe_up: "",  swipe_down: "", width: 10,height: 41.5}
-      # - {click: 3, label: "☲    ",swipe_up: "",  swipe_down: "", width: 10,height: 41.5}
-      # - {click: 4, label: "☳    ",swipe_up: "",  swipe_down: "", width: 10,height: 41.5}
-      # - {click: 5, label: "☴    ",swipe_up: "",  swipe_down: "", width: 10,height: 41.5}
-      # - {click: 6, label: "☵    ",swipe_up: "",  swipe_down: "", width: 10,height: 41.5}
-      # - {click: 7, label: "☶    ",swipe_up: "",  swipe_down: "", width: 10,height: 41.5}
-      # - {click: 8, label: "☷    ", swipe_up: "",  swipe_down: "", width: 10,height: 41.5}
-      # - {click: 9, label: "◉    ", swipe_up: "",  swipe_down: "", width: 10,height: 41.5}
-      # - {click: 0, label: "❍    ",swipe_up: "",  swipe_down: "", width: 10,height: 41.5}
+      - {click: 1, label: "☰    ",swipe_up: "",  swipe_down: "", width: 10,height: 41.5}
+      - {click: 2, label: "☱    ",swipe_up: "",  swipe_down: "", width: 10,height: 41.5}
+      - {click: 3, label: "☲    ",swipe_up: "",  swipe_down: "", width: 10,height: 41.5}
+      - {click: 4, label: "☳    ",swipe_up: "",  swipe_down: "", width: 10,height: 41.5}
+      - {click: 5, label: "☴    ",swipe_up: "",  swipe_down: "", width: 10,height: 41.5}
+      - {click: 6, label: "☵    ",swipe_up: "",  swipe_down: "", width: 10,height: 41.5}
+      - {click: 7, label: "☶    ",swipe_up: "",  swipe_down: "", width: 10,height: 41.5}
+      - {click: 8, label: "☷    ", swipe_up: "",  swipe_down: "", width: 10,height: 41.5}
+      - {click: 9, label: "◉    ", swipe_up: "",  swipe_down: "", width: 10,height: 41.5}
+      - {click: 0, label: "❍    ",swipe_up: "",  swipe_down: "", width: 10,height: 41.5}
       # 第一行
-      - { click: q, label: Q, swipe_up: 1, swipe_down: "一" }
-      - { click: w, label: W, swipe_up: 2, swipe_down: "二" }
-      - { click: e, label: E, swipe_up: 3, swipe_down: "三" }
-      - { click: r, label: R, swipe_up: 4, swipe_down: "四" }
-      - { click: t, label: T, swipe_up: 5, swipe_down: "五" }
-      - { click: y, label: Y, swipe_up: 6, swipe_down: "六" }
-      - { click: u, label: U, swipe_up: 7, swipe_down: "七" }
-      - { click: i, label: I, swipe_up: 8, swipe_down: "八" }
-      - { click: o, label: O, swipe_up: 9, swipe_down: "九" }
-      - { click: p, label: P, swipe_up: 0, swipe_down: "〇" }
+      - { click: q, label: Q, swipe_up: commit1, swipe_down: "一" }
+      - { click: w, label: W, swipe_up: commit2, swipe_down: "二" }
+      - { click: e, label: E, swipe_up: commit3, swipe_down: "三" }
+      - { click: r, label: R, swipe_up: commit4, swipe_down: "四" }
+      - { click: t, label: T, swipe_up: commit5, swipe_down: "五" }
+      - { click: y, label: Y, swipe_up: commit6, swipe_down: "六" }
+      - { click: u, label: U, swipe_up: commit7, swipe_down: "七" }
+      - { click: i, label: I, swipe_up: commit8, swipe_down: "八" }
+      - { click: o, label: O, swipe_up: commit9, swipe_down: "九" }
+      - { click: p, label: P, swipe_up: commit0, swipe_down: "〇" }
 
       # 第二行
       - { width: 5 }
-      - { click: a, label: A, swipe_up: "@", swipe_down: "@"}
-      - { click: s, label: S, swipe_up: "#", swipe_down: "#"}
-      - { click: d, label: D, swipe_up: "$", swipe_down: "￥"}
-      - { click: f, label: F, swipe_up: "%", swipe_down: "……" }
-      - { click: g, label: G, swipe_up: "*", swipe_down: "&"}
-      - { click: h, label: H, swipe_up: "=", swipe_down: "+"}
-      - { click: j, label: J, swipe_up: "-", swipe_down: "_"}
-      - { click: k, label: K, swipe_up: bracket, swipe_down: bracket2}
-      - { click: l, label: L, swipe_up: quotationMarkFull, swipe_down: quotationMarkHalf}
+      - {click: a, label: A, swipe_up: commit～}
+      - { click: s, label: S, swipe_up: "@"}
+      - {click: d, label: D, swipe_up: "#",  swipe_down: "&" }
+      - {click: f, label: F, swipe_up: "%", swipe_down: "￥" }
+      - { click: g, label: G, swipe_up: commit（, swipe_down: "(" }
+      - { click: h, label: H, swipe_up: commit）, swipe_down: ")" }
+      - {click: j, label: J, swipe_up: "*",  swipe_down: "'" }
+      - {click: k, label: K, swipe_up: '〝'}
+      - { click: l, label: L, swipe_up: "〞"}
       - { width: 5 }
 
       # 第三行
       - {click: symbols1, width: 10, sound: *soundm} #符
       - {click: Shift, width: 4.5, sound: *soundm} #大小写
-      - {click: z, label: Z, swipe_up: "`", swipe_down: "～" }
-      - {click: x, label: X, swipe_up: "/", swipe_down: "/"}
-      - {click: c, label: C, swipe_up: "：", swipe_down: ":"}
-      - {click: v, label: V, swipe_up: "；", swipe_down: ";"}
+      - { click: z, label: Z, swipe_up: "`", swipe_down: "'" }
+      - {click: x, label: X, swipe_up: "-"}
+      - {click: c, label: C, swipe_up: semicolon}
+      - { click: v, label: V, swipe_up: "；"}
       - {click: b, label: B, swipe_up: "、",  swipe_down: "《" }
       - {click: n, label: N, swipe_up: point, swipe_down: "》" }
       - {click: m, label: M, swipe_up: questionMark, swipe_down: "" }
-      - {click: BackSpace, width: 15, sound: *soundd}#删除
+      - { click: BackSpace, width: 15, sound: *soundd}#删除
 
   
+
       # 第四行
       - {click: english, width: 13, sound: *soundm} #英语
       - {click: switcht9, width: 10, sound: *soundm} #123
-      - {click: "。", swipe_up: ".", width: 9}#点
-      - {click: space, width: 39, sound: *soundm} #空格
       - {click: commaFull, swipe_up: ",", width: 9}#点
+      - {click: space, width: 39, sound: *soundm} #空格
+      - {click: "。", swipe_up: ".", width: 9}#点
       - {click: Return, width: 20, sound: *soundm} #换行
     name: "默认键盘"
     width: 10
@@ -406,12 +407,11 @@ preset_keys:
   bracket6: {label: "；", text: "；"} #直接上屏分号
   bracket4: {label: "(", text: "‘’{Left}"} #先上屏‘’光标往左移动一格
   bracket3: {label: "(", text: "【】{Left}"} #先上屏【】光标往左移动一格
-  bracket2: { label: "（", text: "（）{Left}" } #先上屏()光标往左移动一格
+  bracket2: {label: "(", text: "(){Left}"} #先上屏()光标往左移动一格
   bracket1: {label: ")", text: "){DefaultKeyboard}"} #先上屏)再跳转到default键盘
-  quotationMarkFull: {label: "〝", text: "“”{Left}{DefaultKeyboard}"} 
+  quotationMarkFull: {label: "〝", text: "〝〞{Left}{DefaultKeyboard}"} 
   quotationMarkFull1: {label: "〞", text: "〞＂{Left}{DefaultKeyboard}"}
   quotationMarkFull2: {label: "〝", text: "〝〞{Left}"} 
-  quotationMarkHalf: {label: "\"", text: "\"\"{Left}{DefaultKeyboard}"}
   quotationMarkHalf１: {label: "\"", text: "\"{DefaultKeyboard}"} 
   quotationMarkHalf2: {label: "\"", text: "“”{Left}"} 
   quotationMarkFull１: {label: "\"", text: "＂{DefaultKeyboard}"} 
