@@ -20,8 +20,9 @@ local function filter(input, env)
 
   local commit = env.engine.context:get_commit_text()--输入的编码
   for cand in input:iter() do
-    cand:get_genuine().preedit = cand.text.." [".. commit .."]"--首选+编码
-    -- cand:get_genuine().preedit = cand.text
+    -- cand:get_genuine().preedit = cand.text.."✍".. commit--首选+书写图标+编码
+    -- cand:get_genuine().preedit = cand.text.."[".. commit.."]" --首选+编码
+    cand:get_genuine().preedit = cand.text
     yield(cand)
   end
   --  reverse_lookup_filter(input, env.pydb)

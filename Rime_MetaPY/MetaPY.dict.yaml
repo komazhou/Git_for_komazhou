@@ -27,6 +27,7 @@ import_tables:
   - Extend_dict/MetaPY.Patent	#专利词库
   - Extend_dict/ChangYong	#现代汉语常用词表
   - Extend_dict/luna_pinyin.city_chongqing
+  - Extend_dict/luna_pinyin.cn_en	#英文、中英文混合短语和名词
 
 ...
 的	de	579392145

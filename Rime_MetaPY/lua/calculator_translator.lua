@@ -427,8 +427,8 @@ local function calculator_translator(input, seg)
   if result == nil then return end
   
   result = serialize(result)
-  yield(Candidate("number", seg.start, seg._end, result, "答案"))
   yield(Candidate("number", seg.start, seg._end, exp.." = "..result, "等式"))
+  yield(Candidate("number", seg.start, seg._end, result, "答案"))
 end
 
 return calculator_translator
