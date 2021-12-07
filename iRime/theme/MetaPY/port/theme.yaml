@@ -10,6 +10,7 @@ author: Hui #作者资讯
 # 如果宽度不够，使用 {width} 做间隔。                          #
 # 在每组配置里ascii_mode控制中文，英文键盘                     #
 # 如果需要改暗色按钮 需要使用 send: DarkSpecialCharacter 方式#
+# 默认上下结构和内嵌结构 candidate_view_height:44   小上下:24    #
 #***********************************************************#
 
 #键盘高度等
@@ -24,6 +25,19 @@ height:
   8: &jpgd8 0.0 #符号键盘圆角
   9: &jpgd9 11 #主键盘数字键盘行间距
   10: &jpgd10 4 #主键盘数字键盘水平间距
+  11: &soundc "mnc.caf"  # key  key_press_click.caf 输入按键的声音
+  12: &soundd "mnd.caf"  # bs   key_press_delete  BackSpace的按键音
+  13: &soundm "mnm.caf"  # shift space   key_press_modifier  SHIFT 空格 切键盘 按键音
+  14: &sound0 "mn0.aiff" # Musical note
+  15: &sound1 "mn1.aiff" # Musical note
+  16: &sound2 "mn2.aiff" # Musical note
+  17: &sound3 "mn3.aiff" # Musical note
+  18: &sound4 "mn4.aiff" # Musical note
+  19: &sound5 "mn5.aiff" # Musical note
+  20: &sound6 "mn6.aiff" # Musical note
+  21: &sound7 "mn7.aiff" # Musical note
+  22: &sound8 "mn8.aiff" # Musical note
+  23: &sound9 "mn9.aiff" # Musical note
 
 hide:
   &hide true #false不显示候选窗或true显示候选窗
@@ -47,9 +61,11 @@ style:
   comment_height: 16 #逐码高度 默认值为：16
   show_preview: true #是否显示气泡 默认显示
   round_corner: 0 #值为0的话默认 iphone为4，ipad为8
-  color_scheme: cc1 #配色方案 目前系統黑色主題模式下 沒有作用
+  color_scheme: cc3 #配色方案 目前系統黑色主題模式下 沒有作用
   # cc1 紫底黑字 選字爲深灰黑字  
   # cc2 綠底黑字 選字爲深灰黑字
+  # cc3 橘底 白字 / 黑底 白字
+  # cc4 淡藍 黑字 / 深灰 黑字
   # aqua 藍底白字 推薦
   # ink 黑底白字 推薦
   # azure 藍底黃字 有些界面看不到 
@@ -83,33 +99,34 @@ preset_keyboards:
       - { click: p, label: P, swipe_up: 0, swipe_down: "〇" }
       # 第二行
       - { width: 5 }
-      - {click: a, label: A, swipe_up: "@", swipe_down: "@"}
-      - {click: s, label: S, swipe_up: "#", swipe_down: "#"}
-      - {click: d, label: D, swipe_up: "&", swipe_down: "&"}
-      - {click: f, label: F, swipe_up: "=", swipe_down: "+"}
-      - {click: g, label: G, swipe_up: "-", swipe_down: "_"}
-      - {click: h, label: H, swipe_up: "*", swipe_down: "*"}
-      - {click: j, label: J, swipe_up: "/", swipe_down: "/"}
-      - {click: k, label: K, swipe_up: "=", swipe_down: "="}
-      - {click: l, label: L, swipe_up: bracket, swipe_down: bracket2}
+      - { click: a, label: A, swipe_up: "@", swipe_down: "@"}
+      - { click: s, label: S, swipe_up: "#", swipe_down: "#"}
+      - { click: d, label: D, swipe_up: "$", swipe_down: "￥"}
+      - { click: f, label: F, swipe_up: "%", swipe_down: "……" }
+      - { click: g, label: G, swipe_up: "*", swipe_down: "&"}
+      - { click: h, label: H, swipe_up: "=", swipe_down: "+"}
+      - { click: j, label: J, swipe_up: "-", swipe_down: "_"}
+      - { click: k, label: K, swipe_up: bracket, swipe_down: bracket2}
+      - { click: l, label: L, swipe_up: quotationMarkFull, swipe_down: quotationMarkHalf}
       - { width: 5 }
       # 第三行
       - { click: Shift, width: 14 }
       - { width: 1 }
-      - {click: z, label: Z, swipe_up: "`", swipe_down: "~"}
-      - {click: x, label: X, swipe_up: "$", swipe_down: "￥"}
-      - {click: c, label: C, swipe_up: quotationMarkFull, swipe_down: '"'}
-      - {click: v, label: V, swipe_up: "'", swipe_down: "'"}
-      - {click: b, label: B, swipe_up: "：", swipe_down: ":"}
-      - {click: n, label: N, swipe_up: "；", swipe_down: ";"}
-      - {click: m, label: M, swipe_up: "？", swipe_down: "、"}
+      - {click: z, label: Z, swipe_up: "`", swipe_down: "～" }
+      - {click: x, label: X, swipe_up: "/", swipe_down: "/"}
+      - {click: c, label: C, swipe_up: "：", swipe_down: ":"}
+      - {click: v, label: V, swipe_up: "；", swipe_down: ";"}
+      - {click: b, label: B, swipe_up: "、",  swipe_down: "《" }
+      - {click: n, label: N, swipe_up: point, swipe_down: "》" }
+      - {click: m, label: M, swipe_up: questionMark, swipe_down: "" }
       - { width: 1 }
       - { click: BackSpace, width: 14 }
       # 第四行
-      - { click: switcht9, label: "123", width: 18}
-      - {click: english, width: 12}
-      - {click: space, width: 40}
-      - {click: "，", label: ",.", swipe_up: "。", swipe_down: ".", width: 12}
+      - {click: english, width: 12, sound: *soundm} #英语
+      - {click: switcht9, label: "123", width: 10, sound: *soundm}
+      - {click: commaFull, swipe_up: commaHalf, width: 9}
+      - {click: space, width: 42, sound: *soundm}
+      - {click: "。", swipe_up: ".", width: 9} #点
       - {click: Return, width: 18}
     width: 10
 
@@ -135,33 +152,34 @@ preset_keyboards:
       - {click: p, swipe_up: 0, swipe_down: "〇"}
       #第二行
       - {width: 5}
-      - {click: a, swipe_up: "～", swipe_down: "~"}
-      - {click: s, swipe_up: "、", swipe_down: "/"}
-      - {click: d, swipe_up: "：", swipe_down: ":"}
-      - {click: f, swipe_up: "；", swipe_down: ";"}
-      - {click: g, swipe_up: bracket, swipe_down: "("}
-      - {click: h, swipe_up: "）", swipe_down: ")"}
-      - {click: j, swipe_up: "@", swipe_down: "@"}
-      - {click: k, swipe_up: quotationMarkFull, swipe_down: '"'}
-      - {click: l, swipe_up: "'", swipe_down: "'"}
+      - { click: a, swipe_up: "@", swipe_down: "@"}
+      - { click: s, swipe_up: "#", swipe_down: "#"}
+      - { click: d, swipe_up: "$", swipe_down: "￥"}
+      - { click: f, swipe_up: "%", swipe_down: "……" }
+      - { click: g, swipe_up: "*", swipe_down: "&"}
+      - { click: h, swipe_up: "=", swipe_down: "+"}
+      - { click: j, swipe_up: "-", swipe_down: "_"}
+      - { click: k, swipe_up: bracket2, swipe_down: bracket}
+      - { click: l, swipe_up: quotationMarkHalf, swipe_down: quotationMarkFull}
       - {width: 5}
       #第三行
       - {click: Shift, width: 14}
       - {width: 1}
-      - {click: z, swipe_up: "`", swipe_down: "-"}
-      - {click: x, swipe_up: "——", swipe_down: "_"}
-      - {click: c, swipe_up: "#", swipe_down: "#"}
-      - {click: v, swipe_up: "？", swipe_down: "?"}
-      - {click: b, swipe_up: "！", swipe_down: "!"}
-      - {click: n, swipe_up: "，", swipe_down: ","}
-      - {click: m, swipe_up: "。", swipe_down: "."}
+      - {click: z, swipe_up: "`", swipe_down: "～" }
+      - {click: x, swipe_up: "/", swipe_down: "/"}
+      - {click: c, swipe_up: "：", swipe_down: ":"}
+      - {click: v, swipe_up: "；", swipe_down: ";"}
+      - {click: b, swipe_up: "、",  swipe_down: "《" }
+      - {click: n, swipe_up: point, swipe_down: "》" }
+      - {click: m, swipe_up: questionMark, swipe_down: "" }
       - {width: 1}
       - {click: BackSpace, width: 14}
       #第四行
-      - { click: switcht9, label: "123", width: 18}
-      - {click: chinese, width: 12}
-      - {click: space, width: 40}
-      - {click: ",", swipe_up: ".", width: 12}
+      - {click: switcht9, label: "123", width: 10, sound: *soundm} #英语
+      - {click: chinese, width: 12, sound: *soundm}
+      - {click: commaHalf, swipe_up: commaFull, width: 9}
+      - {click: space, width: 42, sound: *soundm}
+      - {click: "。", swipe_up: ".", width: 9} #点
       - {click: Return, width: 18}
     width: 10
 
