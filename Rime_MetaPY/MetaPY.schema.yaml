@@ -1,6 +1,6 @@
-# Rime schema
+# Rime schema：MetaPY.schema.yaml
 # encoding: utf-8
-# 方案详解参考：https://github.com/LEOYoon-Tsaw/Rime_collections/blob/master/Rime_description.md
+# 输入方案详解参考：https://github.com/LEOYoon-Tsaw/Rime_collections/blob/master/Rime_description.md
 # 基于全拼方案
 # 感谢fkxxyz提供的词库支持 - https://www.fkxxyz.com
 
@@ -15,42 +15,40 @@ schema:
   description: |
     基于朙月拼音的小鹤双拼方案
     特点：
-      1、增加小鹤形码辅助组词和造句。
-      2、增加小鹤原生反查方案。
-      3、增加搜狗输入法的U模式拆字反查生词。
-      4、增加emoji 表情支持
-      5、增加特殊符号的输入支持
-      6、增加四叶草方案词库，感谢fkxxyz提供的词库支持 - https://www.fkxxyz.com
+      1、小鹤双拼；
+      2、形码辅助；
+      3、小鹤音形码查询——使用`引导；
+      4、全拼反查——使用U引导；
+      5、输入日期和时间；
+      6、增加emoji 表情支持
+      7、增加特殊符号的输入支持
+      8、增加四叶草方案词库，感谢fkxxyz提供的词库支持 - https://www.fkxxyz.com
   dependencies:    # 如果本方案依賴於其它方案〔通常來說會依頼其它方案做爲反查，抑或是兩種或多種方案混用時〕
     - luna_pinyin
-#    - core   #添加core.schema.yaml， 调用lua精准过滤生僻字2021年08月24日
 
 
-switches:
+switches: #下方的0对应中括号内的左项，1对应右项
   - name: ascii_mode
-    reset: 0 #默认中文编码
+    reset: 0  #默认中文编码
     states: [ 中, 英 ]
   - name: zh_simp_s2t
-    reset: 0 #默认简体汉字 0为下方中括号内的左项,1为右项
+    reset: 0  #默认简体汉字 
     states: [ 汉字, 漢字 ]
   - name: full_shape
-    reset: 0
+    reset: 0  #默认半角符号
     states: [ 半, 全 ]
   - name: emoji_suggestion
-    reset: 1
-    states: [ "😭️", "😄️" ]
+    reset: 0  #默认开启emoji符号
+    states: [ "😄️", "😭️" ]
   - name: symbol_support
-    reset: 1
-    states: [ "无符", "符" ]
+    reset: 0  #默认开启特殊符号
+    states: [ "符", "无符" ]
   - name: ascii_punct
     reset: 0
     states: [ 。，, ．， ]
-  - name: English              #简单English互译滤镜
-    reset: 0                        #默认1，常用
+  - name: English #简单English互译滤镜
+    reset: 0  #默认关闭
     states: ["EN_关", "EN_开"]
-#  - name: extended_char             # lua精准过滤生僻字，控制开关
-#    reset: 1                        #默认1，常用
-#    states: ["超集", "常用"]
 
 engine:
   processors:
@@ -62,95 +60,96 @@ engine:
     - selector
     - navigator
     - express_editor
-#    - lua_processor@select_character_processor  # 添加 以词定句
   segmentors:
     - ascii_segmentor
     - matcher
     - abc_segmentor
     - punct_segmentor
     - affix_segmentor@Semi-EN
-    - affix_segmentor@flypydz # 自定义tag flypydz
-    - affix_segmentor@luna_pinyin # 自定义tag luna_pinyin
-    - affix_segmentor@RenMing # 自定义tag RenMing
+    - affix_segmentor@flypydz #自定义tag flypydz——小鹤音形码查询
+    - affix_segmentor@luna_pinyin #自定义tag luna_pinyin——全拼反查
+    - affix_segmentor@RenMing # 自定义tag RenMing——人名输入模式
     - fallback_segmentor
   translators:
     - punct_translator
 #    - reverse_lookup_translator
     - script_translator
-    - script_translator@flypydz #用于反查的flypydz翻译器
-    - script_translator@luna_pinyin #用于反查的luna_pinyin翻译器
-    - script_translator@RenMing #用于反查的RenMing翻译器
-    - lua_translator@date_translator # 添加 调用Rime-lua插件，自定义系统变量输出日期、星期、时间类型输出
+    - script_translator@flypydz #用于反查的flypydz翻译器——小鹤音形码查询
+    - script_translator@luna_pinyin #用于反查的luna_pinyin翻译器——全拼反查
+    - script_translator@RenMing #用于反查的RenMing翻译器——人名输入模式
+    - lua_translator@date_translator # 添加调用Rime-lua插件，输出日期、星期、时间
     - table_translator@custom_phraseVD
     - table_translator@custom_phraseXT
     - table_translator@custom_phraseYH
     - lua_translator@calculator_translator
+    - lua_translator@user_dictionary #增加自造词和编码直接写入词库文件
   filters:
-#    - lua_filter@core #lua精准过滤，必须放到engine/filters:滤镜第一行2021年08月24日
     - simplifier
     - uniquifier
-    - lua_filter@preedit_preview
-    - simplifier@emoji_suggestion #表情
-    - simplifier@symbol_support #符号支持
-    - reverse_lookup_filter@reverse_lookup # 反查濾鏡
+    #- lua_filter@preedit_preview
+    - simplifier@emoji_suggestion # emoji表情支持
+    - simplifier@symbol_support # 特殊符号支持
+    - reverse_lookup_filter@reverse_lookup  # 反查濾鏡
     - simplifier@English
 
 simplifier:
   option_name: zh_simp_s2t
   opencc_config: s2t.json
 
-#emoji表情
+# emoji表情支持
 emoji_suggestion:
   opencc_config: emoji.json
   option_name: emoji_suggestion
   tips: all
   
-#symbol符号
+# symbol符号支持
 symbol_support:
   opencc_config: symbol.json
   option_name: symbol_support
   tips: all
 
-# 简单的 English互译滤镜
+# 简单的English互译滤镜
 English: 
   opencc_config: English.json
   option_name: English
   tips: all
 
-Semi-EN:   # 增加I模式输入中文
+# 增加I模式输入中文
+Semi-EN:
   tag: Semi-EN
   prefix: "I"
   tips: "I模式-英语输入"
 
-# 反查濾鏡
+# 反查滤镜
 reverse_lookup:
-  tags: [luna_pinyin, flypydz, RenMing] # 掛在翻譯器luna_pinyin和flypydz上
-  overwrite_comment: true     # 覆蓋其他提示
-  dictionary: MetaPY  # 反查所得爲MetaPY词典
+  tags: [luna_pinyin, flypydz, RenMing] # 反查滤镜的tag[标签]，包含全拼反查tag——luna_pinyin；小鹤音形码查询tag——flypydz；人名输入模式——RenMing
+  overwrite_comment: true # 是否覆蓋其他提示
+  dictionary: MetaPY  # 反查所得为MetaPY词典
 
-# 副翻译器1 小鹤反查
+# 副翻译器1——全拼反查
+luna_pinyin:
+  tag: luna_pinyin
+  dictionary: luna_pinyin.custom  # 用于反查编码的输入法词库名称
+  preedit_format:
+    - "xlit|abcdefghijklmnopqrstuvwxyz|abcdefghijklmnopqrstuvwxyz|"
+  comment_format:
+    - "xlit|abcdefghijklmnopqrstuvwxyz|abcdefghijklmnopqrstuvwxyz|"
+  prefix: "U" # 反查引导符
+  suffix: "'"
+  tips: "〔U模式輸入。支持拆分(水+水+水=>淼)〕"
+#tips: "〔U模式輸入。待完善：笔画（h/横，s/竖，p/撇，n/捺，z/折），以及符号(Uubd:标点，Uuux:数学，Uudu:点数1.,Uudw:单位，Uued:俄语大写，Uuex:俄语小写，Uuku:括数(1)，Uurd:日语大写，Uurx:日语小写，uuxh:序号，uuts:特殊，uusx:数学，uujh:几何，uuzm:字母)输入〕"
+
+# 副翻译器2——小鹤音形码查询
 flypydz:
   tag: flypydz
-  dictionary: flypydz # 調取詞典flypydz
+  dictionary: flypydz # 用于反查的词库flypydz
   comment_format:
    # - xform/^/〔/
    # - xform/$/〕/
     - xform/ / /
 
-# 副翻译器2 搜狗输入法U模式反查
-luna_pinyin:
-  tag: luna_pinyin
-  dictionary: luna_pinyin.custom  #用于反查编码的另一种输入法词库名称 
-  preedit_format:
-    - "xlit|abcdefghijklmnopqrstuvwxyz|abcdefghijklmnopqrstuvwxyz|"
-  comment_format:
-    - "xlit|abcdefghijklmnopqrstuvwxyz|abcdefghijklmnopqrstuvwxyz|"
-  prefix: "U" #反查引导符，即按下这个键后再输入另一种输入法的编码
-  suffix: "'"
-  tips: "〔U模式輸入。支持拆分(水+水+水=>淼)〕"
-#tips: "〔U模式輸入。待完善：笔画（h/横，s/竖，p/撇，n/捺，z/折），以及符号(Uubd:标点，Uuux:数学，Uudu:点数1.,Uudw:单位，Uued:俄语大写，Uuex:俄语小写，Uuku:括数(1)，Uurd:日语大写，Uurx:日语小写，uuxh:序号，uuts:特殊，uusx:数学，uujh:几何，uuzm:字母)输入〕"
 
-# 副翻译器3 R模式输入姓名
+# 副翻译器3——人名输入模式
 RenMing:
   tag: RenMing
   dictionary: RenMing  #用于反查编码的另一种输入法词库名称
@@ -158,21 +157,21 @@ RenMing:
 #    - "xlit|abcdefghijklmnopqrstuvwxyz|abcdefghijklmnopqrstuvwxyz|"
 #  comment_format:
 #    - "xlit|abcdefghijklmnopqrstuvwxyz|abcdefghijklmnopqrstuvwxyz|"
-  prefix: "R" #反查引导符，即按下这个键后再输入另一种输入法的编码
+  prefix: "R" # 反查引导符R
   suffix: "'"
   tips: "〔R模式輸入姓名〕"
 
 #tips: "〔V模式輸入。支持多种格式的数字(V123：一百二十三)、日期(v2016.8.8：2016年8月8日)、时间(v12:34：十二时三十四分)以及公式(V1+2：3)等的输入〕"
+
 # 增加八股文简化字语言模型，优化长句输入
-grammar:
-  language: zh-hans-t-essay-bgw  #自定义
+# grammar:
+#   language: zh-hans-t-essay-bgw  #自定义
 
 speller:
-  alphabet: zyxwvutsrqponmlkjihgfedcba;  # alphabet：设置本 speller 需要监听的键
+  alphabet: zyxwvutsrqponmlkjihgfedcba;+  # alphabet：设置本 speller 需要监听的键
   initials: zyxwvutsrqponmlkjihgfedcba  # initials：设置哪些键仅在开头的时候才需要监听
-#  finals: ;  # finals：设置哪些键仅在末尾的时候才需要监听
-  # delimiter：分词符
-  delimiter: " '"
+  finals: ;  # finals：设置哪些键仅在末尾的时候才需要监听
+  delimiter: "'" # 分词符
   algebra:  # algebra：Rime 核心的拼写运算规则，所有 algebra 算出的规则最后写入 prism
     - erase/^xx$/
           # 消除／Erasion : 若拼寫與<模式> 完全匹配，則將該拼寫從有效拼寫集合中消除。
@@ -237,11 +236,12 @@ speller:
           # 格式：abbrev/<模式>/<替換式>/
           # 實例：算式 abbrev/^([a-z]).+$/$1/
           # 效果：以首字母爲多字母音節碼的縮寫。
+
 translator:
-  # enable_charset_filter: 	# 是否開啓字符集過濾〔僅table_translator有效。啓用cjk_minifier後可適用於script_translator〕
-  # disable_user_dict_for_patterns: 	# 禁止某些編碼錄入用戶詞典
-  enable_sentence: true	# 是否開啓自動造句
-  # enable_user_dict: true	# 是否開啓用戶詞典〔用戶詞典記錄動態字詞頻、用戶詞〕
+  # enable_charset_filter:  # 是否開啓字符集過濾〔僅table_translator有效。啓用cjk_minifier後可適用於script_translator〕
+  # disable_user_dict_for_patterns: # 禁止某些編碼錄入用戶詞典
+  enable_sentence: true # 是否開啓自動造句
+  # enable_user_dict: true  # 是否開啓用戶詞典〔用戶詞典記錄動態字詞頻、用戶詞〕
     #  以上選塡true或false
   dictionary: MetaPY	# dictionary：翻译器使用的字典名,指定字典
   # prism：设定此翻译器的 speller 生成的棱镜文件名，或此副编译器调用的棱镜名
@@ -251,10 +251,8 @@ translator:
   # preedit_format: 上屛碼自定義 即用來將輸入的雙拼碼反轉爲全拼顯示；待見雙拼碼的可以把這段拿掉
   #comment_format:  # 提示碼自定義
   #  - "xlit|abcdefghijklmnopqrstuvwxyz|abcdefghijklmnopqrstuvwxyz|"
-  spelling_hints: 4 # 設定多少字以內候選標註完整帶調拼音〔僅script_translator有效〕
-  # initial_quality: 設定此翻譯器出字優先級
-  #preedit_format: {} # 這段代碼用來將輸入的雙拼碼反轉爲全拼顯示；待見雙拼碼的可以把這段拿掉
-  
+  spelling_hints: 6 # 設定多少字以內候選標註完整帶調拼音〔僅script_translator有效〕
+  # initial_quality: 設定此翻譯器出字優先級  
 
 custom_phraseVD: #置顶词典
   dictionary: ""

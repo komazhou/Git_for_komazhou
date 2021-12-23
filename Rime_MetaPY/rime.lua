@@ -1,3 +1,6 @@
+--- 在Rime中把自造词和编码直接写入到词库文件
+user_dictionary = require("user_dictionary")
+
 --- 在Rime使用計算器
 calculator_translator = require("calculator_translator")
 
@@ -13,10 +16,10 @@ function date_translator(input, seg)
     --- 翻译日期
     if (input == "oriqi") then
         --- Candidate(type, start, end, text, comment)
+        yield(Candidate("date", seg.start, seg._end, os.date("%Y%m%d"), ""))  ---效果：20210225
         yield(Candidate("date", seg.start, seg._end, os.date("%Y年%m月%d日"), ""))  ---效果：2021年02月25日
         yield(Candidate("date", seg.start, seg._end, os.date("%Y-%m-%d"), ""))  ---效果：2021-02-25
         yield(Candidate("date", seg.start, seg._end, os.date("%Y/%m/%d"), ""))  ---效果：2021/02/25
-        yield(Candidate("date", seg.start, seg._end, os.date("%Y%m%d"), ""))  ---效果：20210225
         yield(Candidate("date", seg.start, seg._end,date_m_tab[tonumber(os.date("%m"))].."月"..date_d_tab[tonumber(os.date("%d"))].."日",""))  ---输出效果（英文）：二月二十八日
         -- yield(Candidate("date", seg.start, seg._end, os.date("%m-%d"), ""))  ---效果：02-25
         -- yield(Candidate("date", seg.start, seg._end, os.date("%m月%d日"), ""))  ---效果：02月-25日

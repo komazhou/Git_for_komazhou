@@ -1,8 +1,7 @@
-# luna_pinyin.custom.yaml
+# MetaPY.custom.yaml
+# encoding: utf-8
 #
-# 補靪功能：實現英文輸入
-#
-# 作者：瑾昀 <cokunhui@gmail.com>
+# 作者：周辉 <komazhou630@gmail.com>
 #
 # 部署位置：
 # ~/.config/ibus/rime  (Linux)
@@ -10,12 +9,6 @@
 # %APPDATA%\Rime  (Windows)
 #
 # 於重新部署後生效
-#
-#
-# 注意：本補靪適用於所有rime方案。
-# 只須將本 custom.yaml 的前面名字改爲對應的輸入方案名字然後放入用戶文件夾重新部署即可。如更名爲 cangjie5.custom.yaml 即可應用至倉頡輸入法中。
-#
-#
 #
 
 patch:
@@ -29,4 +22,4 @@ patch:
     spelling_hints: 9
     enable_completion: true
     enable_sentence: false
-    initial_quality: -1
+    initial_quality: -3
