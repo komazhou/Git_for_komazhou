@@ -27,4 +27,6 @@ komazhou630@hotmail.com	koma
 重庆市南岸区御泰路8号2幢6-9	qijbdivi
 国家知识产权局	goviju
 ev:	ev
-
+Windows	win
+IOS	ios
+OneDrive	one
