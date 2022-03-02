@@ -136,8 +136,8 @@ luna_pinyin:
     - "xlit|abcdefghijklmnopqrstuvwxyz|abcdefghijklmnopqrstuvwxyz|"
   prefix: "U" # 反查引导符
   suffix: "'"
-  tips: "〔U模式輸入。支持拆分(水+水+水=>淼)〕"
-#tips: "〔U模式輸入。待完善：笔画（h/横，s/竖，p/撇，n/捺，z/折），以及符号(Uubd:标点，Uuux:数学，Uudu:点数1.,Uudw:单位，Uued:俄语大写，Uuex:俄语小写，Uuku:括数(1)，Uurd:日语大写，Uurx:日语小写，uuxh:序号，uuts:特殊，uusx:数学，uujh:几何，uuzm:字母)输入〕"
+  tips: "〔U模式輸入。支持拆分(水+水+水=>淼)，以及符号(标点:bndm；序号:xuhc；单位:djww；特殊:teuu；数学:uuxt；希腊字母:xila；罗马字母:loma；拼音:pbyb；日文:riwf；俄文:eewf；偏旁:pmph；上标:uhbn；下标:xxbn；注音符号:vuyb；制表符:vibn；)输入〕"
+#tips: "〔U模式輸入。待完善：笔画（h/横，s/竖，p/撇，n/捺，z/折）〕"
 
 # 副翻译器2——小鹤音形码查询
 flypydz:
@@ -242,7 +242,7 @@ translator:
   # disable_user_dict_for_patterns: # 禁止某些編碼錄入用戶詞典
   # strict_spelling: true
   enable_sentence: true # 是否開啓自動造句
-  # enable_user_dict: true  # 是否開啓用戶詞典〔用戶詞典記錄動態字詞頻、用戶詞〕
+  enable_user_dict: true  # 是否開啓用戶詞典〔用戶詞典記錄動態字詞頻、用戶詞〕
     #  以上選塡true或false
   dictionary: MetaPY	# dictionary：翻译器使用的字典名,指定字典
   # prism：设定此翻译器的 speller 生成的棱镜文件名，或此副编译器调用的棱镜名
