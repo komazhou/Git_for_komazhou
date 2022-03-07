@@ -66,17 +66,20 @@ engine:
     - abc_segmentor
     - punct_segmentor
     - affix_segmentor@Semi-EN
-    - affix_segmentor@flypydz #自定义tag flypydz——小鹤音形码查询
-    - affix_segmentor@luna_pinyin #自定义tag luna_pinyin——全拼反查
-    - affix_segmentor@RenMing # 自定义tag RenMing——人名输入模式
+    # - affix_segmentor@flypydz #自定义tag flypydz——小鹤音形码查询
+    # - affix_segmentor@luna_pinyin #自定义tag luna_pinyin——全拼反查
+    # - affix_segmentor@RenMing # 自定义tag RenMing——人名输入模式
     - fallback_segmentor
   translators:
     - punct_translator
 #    - reverse_lookup_translator
+    - reverse_lookup_translator@flypydz #用于反查的flypydz翻译器——小鹤音形码查询
+    - reverse_lookup_translator@luna_pinyin #用于反查的luna_pinyin翻译器——全拼反查
+    - reverse_lookup_translator@RenMing #用于反查的RenMing翻译器——人名输入模式
     - script_translator
-    - script_translator@flypydz #用于反查的flypydz翻译器——小鹤音形码查询
-    - script_translator@luna_pinyin #用于反查的luna_pinyin翻译器——全拼反查
-    - script_translator@RenMing #用于反查的RenMing翻译器——人名输入模式
+    # - script_translator@flypydz #用于反查的flypydz翻译器——小鹤音形码查询
+    # - script_translator@luna_pinyin #用于反查的luna_pinyin翻译器——全拼反查
+    # - script_translator@RenMing #用于反查的RenMing翻译器——人名输入模式
     - lua_translator@date_translator # 添加调用Rime-lua插件，输出日期、星期、时间
     - table_translator@custom_phraseVD
     - table_translator@custom_phraseXT
@@ -89,7 +92,7 @@ engine:
     #- lua_filter@preedit_preview
     - simplifier@emoji_suggestion # emoji表情支持
     - simplifier@symbol_support # 特殊符号支持
-    - reverse_lookup_filter@reverse_lookup  # 反查濾鏡
+    # - reverse_lookup_filter@reverse_lookup  # 反查濾鏡
     - simplifier@English
 
 simplifier:
@@ -153,10 +156,10 @@ flypydz:
 RenMing:
   tag: RenMing
   dictionary: RenMing  #用于反查编码的另一种输入法词库名称
-#  preedit_format:
-#    - "xlit|abcdefghijklmnopqrstuvwxyz|abcdefghijklmnopqrstuvwxyz|"
-#  comment_format:
-#    - "xlit|abcdefghijklmnopqrstuvwxyz|abcdefghijklmnopqrstuvwxyz|"
+ preedit_format:
+   - "xlit|abcdefghijklmnopqrstuvwxyz|abcdefghijklmnopqrstuvwxyz|"
+ comment_format:
+   - "xlit|abcdefghijklmnopqrstuvwxyz|abcdefghijklmnopqrstuvwxyz|"
   prefix: "R" # 反查引导符R
   suffix: "'"
   tips: "〔R模式輸入姓名〕"

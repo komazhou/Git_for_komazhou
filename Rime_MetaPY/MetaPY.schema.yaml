@@ -2,17 +2,16 @@
 # encoding: utf-8
 # 输入方案详解参考：https://github.com/LEOYoon-Tsaw/Rime_collections/blob/master/Rime_description.md
 # 基于全拼方案
-# 感谢fkxxyz提供的词库支持 - https://www.fkxxyz.com
 
 schema:
-  name: "元拼" #小鹤双拼+小鹤形码辅助
-  schema_id: MetaPY
-  version: "1.0"
-  author:
+  name: "元拼" # 方案的显示名称
+  schema_id: MetaPY # 方案内部名
+  version: "1.0" # 版本号
+  author: # 方案作者
     - Rime schema by 佛振 <chen.sst@gmail.com>
     - flypy layout by 鶴
     - MetaPY layout by 周辉〈komazhou630@gmail.com>
-  description: |
+  description: | # 简要描述方案历史、码表来源、该方案规则特点等
     基于朙月拼音的小鹤双拼方案
     特点：
       1、小鹤双拼；
@@ -26,74 +25,87 @@ schema:
   dependencies:    # 如果本方案依賴於其它方案〔通常來說會依頼其它方案做爲反查，抑或是兩種或多種方案混用時〕
     - luna_pinyin
 
-
-switches: #下方的0对应中括号内的左项，1对应右项
-  - name: ascii_mode
-    reset: 0  #默认中文编码
+switches: # 开关；reset为设置默认状态，可缺省，缺省状态下须手动切换。
+  - name: ascii_mode # 中英文转换开关，预设0为中文，1为英文
+    reset: 0
     states: [ 中, 英 ]
-  - name: zh_simp_s2t
-    reset: 0  #默认简体汉字 
-    states: [ 汉字, 漢字 ]
-  - name: full_shape
-    reset: 0  #默认半角符号
+  - name: full_shape # 全角符号/半角符号开关,0为半角，1为全角；注意，开启全角时英文字母亦为全角
+    reset: 0
     states: [ 半, 全 ]
+  - name: ascii_punct # 中西文标点转换开关，0为中文标点，1为英文标点。
+    reset: 0
+    states: [ 。，, ．， ]
+  - name: zh_simp_s2t
+    reset: 0
+    states: ["漢字", "汉字"]
+  # - name: gbk # 字符过滤集，此选项没有默认名称，须与charset_filter@后的tag相同;避免同时使用字符过滤集和extented_charset;
+  #   states: ["增广", "常用"]
+  #   reset: 0
   - name: emoji_suggestion
     reset: 0  #默认开启emoji符号
     states: [ "😄️", "😭️" ]
   - name: symbol_support
     reset: 0  #默认开启特殊符号
     states: [ "符", "无符" ]
-  - name: ascii_punct
-    reset: 0
-    states: [ 。，, ．， ]
   - name: English #简单English互译滤镜
     reset: 0  #默认关闭
     states: ["EN_关", "EN_开"]
 
-engine:
-  processors:
-    - ascii_composer
-    - recognizer  #缺少这个会导致lua计算器无法使用
-    - key_binder
-    - speller
-    - punctuator
-    - selector
-    - navigator
-    - express_editor
-  segmentors:
-    - ascii_segmentor
-    - matcher
-    - abc_segmentor
-    - punct_segmentor
+engine: # 引擎，分四组
+  processors: # 这批组件处理各类按键消息
+    - ascii_composer # 处理西文模式及中西文切
+    - recognizer  # 可细配者；与matcher搭配，处理符合特定规则的输入码，如网址、反查等tags
+    - key_binder # 可细配者；在特定条件下将按键绑定到其他按键，如重定义逗号、句号为候选翻页、开关快捷键等
+    - speller # 可细配者；拼写处理器，接受字符按键，编辑输入；
+    - punctuator # 可细配者；标点处理器，将单个字符按键直接映射为标点符号或文字
+    - selector # 选字处理器，处理数字选字键（可以换成别的哦）、上、下候选定位、换页
+    - navigator # 处理输入栏内的光标移动
+    - express_editor # 编辑器，处理空格、回车上屏、回退键
+    # - fluid_editor # 不常用；句式编辑器，用于以空格断词、回车上屏的【注音】、【语句流】等输入方案，替换express_editor
+    # - lua_processor # 使用自定义按键，后接+函数名lua@lua # lua函数名即用户文件夹內中函数名，参数为rime.lua(key, env)
+  segmentors: # 这批组件识别不同内容类型，将输入码分段并加上tag
+    - ascii_segmentor # 標識西文段落〔譬如在西文模式下〕字母直接上屛
+    - matcher # 配合標識符合特定規則的段落，如網址、反查等，加上特定recognizer tag
+    - abc_segmentor # 可细配者；標識常規的文字段落，加上這個abc tag
+    - punct_segmentor # 標識句讀段落〔鍵入標點符號用〕加上這個punct tag
+    - fallback_segmentor # 標識其他未標識段落
+    # - affix_segmentor # 可细配者；用戶自定義tag;此項可加載多個實例，後接+名@tag
     - affix_segmentor@Semi-EN
-    # - affix_segmentor@flypydz #自定义tag flypydz——小鹤音形码查询
-    # - affix_segmentor@luna_pinyin #自定义tag luna_pinyin——全拼反查
-    # - affix_segmentor@RenMing # 自定义tag RenMing——人名输入模式
-    - fallback_segmentor
-  translators:
-    - punct_translator
-#    - reverse_lookup_translator
-    - reverse_lookup_translator@flypydz #用于反查的flypydz翻译器——小鹤音形码查询
-    - reverse_lookup_translator@luna_pinyin #用于反查的luna_pinyin翻译器——全拼反查
-    - reverse_lookup_translator@RenMing #用于反查的RenMing翻译器——人名输入模式
-    - script_translator
-    # - script_translator@flypydz #用于反查的flypydz翻译器——小鹤音形码查询
-    # - script_translator@luna_pinyin #用于反查的luna_pinyin翻译器——全拼反查
-    # - script_translator@RenMing #用于反查的RenMing翻译器——人名输入模式
-    - lua_translator@date_translator # 添加调用Rime-lua插件，输出日期、星期、时间
+    - affix_segmentor@flypydz #自定义tag flypydz——小鹤音形码查询
+    - affix_segmentor@luna_pinyin #自定义tag luna_pinyin——全拼反查
+    # - lua_segmentor # 不常用；使用自定義切分，後接+函數名lua@lua
+  translators: # 這批組件翻譯特定類型的編碼段爲一組候選文字
+    # - echo_translator # 沒有其他候選字時，回顯輸入碼〔輸入碼可以+上屛〕Shift Enter
+    - punct_translator # 配合轉換標點符號punct_segmentor
+    # - table_translator # 碼表翻譯器，用於倉頡、五筆等基於碼表的輸入方案；- 此項可加載多個實例，後接+翻譯器名〔如：@cangjie、wubi等〕 
     - table_translator@custom_phraseVD
     - table_translator@custom_phraseXT
     - table_translator@custom_phraseYH
+    - script_translator # 腳本翻譯器，用於拼音、粵拼等基於音節表的輸入方案；- 此項可加載多個實例，後接+翻譯器名〔如：@pinyin、jyutping 等〕 
+    - script_translator@flypydz # 用于反查的flypydz翻译器——小鹤音形码查询
+    - script_translator@luna_pinyin # 用于反查的luna_pinyin翻译器——全拼反查
+    # - reverse_lookup_translator # 反查翻譯器，用另一種編碼方案查碼
+    - lua_translator@date_translator # 使用自定義輸入，例如動態輸入當前日期、時間，後接lua@+lua函數名
+    # lua函數名即用戶文件夾內中函數名，參數爲rime.lua(input, seg, env)
+    # 可以方式綁定到開關／快捷鍵env.engine.context:get_option("option_name")switchkey_binder
     - lua_translator@calculator_translator
     - lua_translator@user_dictionary #增加自造词和编码直接写入词库文件
-  filters:
-    - simplifier
-    - uniquifier
-    #- lua_filter@preedit_preview
+  filters: # 這批組件過濾翻譯的結果
+    - uniquifier # 過濾重複的候選字，有可能來自simplifier
+    # - cjk_minifier # 字符集過濾〔僅用於script_translator，使之支援extended_charset開關〕
+    # - single_char_filter # 可细配者；單字過濾器，如加載此組件，則屛敝詞典中的詞組〔僅table_translator有效〕
+    - simplifier # 可细配者；用字转换
     - simplifier@emoji_suggestion # emoji表情支持
     - simplifier@symbol_support # 特殊符号支持
-    # - reverse_lookup_filter@reverse_lookup  # 反查濾鏡
     - simplifier@English
+    # - reverse_lookup_filter # 可细配者；反查濾鏡，以更靈活的方式反查，Rime1.0後替代reverse_lookup_translator 
+    # # 此項可加載多個實例，後接@+濾鏡名〔如：pinyin_lookup、jyutping_lookup等〕
+    - reverse_lookup_filter@reverse_lookup  # 反查濾鏡
+    # - charset_filter # 可细配者；字符集過濾 # 後接@+字符集名〔如：(無過濾)utf-8、big5、big5hkscs、gbk、gb2312〕
+    # - lua_filter #　使用自定義過濾，例如過濾字符集、調整排序，lua後接@+lua函數名；
+    # --lua函數名即用戶文件夾內中函數名，參數爲rime.lua(input, env)
+    # --可以方式綁定到開關／快捷鍵env.engine.context:get_option("option_name")switchkey_binder
+    #- lua_filter@preedit_preview
 
 simplifier:
   option_name: zh_simp_s2t
@@ -125,7 +137,7 @@ Semi-EN:
 
 # 反查滤镜
 reverse_lookup:
-  tags: [luna_pinyin, flypydz, RenMing] # 反查滤镜的tag[标签]，包含全拼反查tag——luna_pinyin；小鹤音形码查询tag——flypydz；人名输入模式——RenMing
+  tags: [luna_pinyin, flypydz] # 反查滤镜的tag[标签]，包含全拼反查tag——luna_pinyin；小鹤音形码查询tag——flypydz；
   overwrite_comment: true # 是否覆蓋其他提示
   dictionary: MetaPY  # 反查所得为MetaPY词典
 
@@ -151,24 +163,7 @@ flypydz:
    # - xform/$/〕/
     - xform/ / /
 
-
-# 副翻译器3——人名输入模式
-RenMing:
-  tag: RenMing
-  dictionary: RenMing  #用于反查编码的另一种输入法词库名称
- preedit_format:
-   - "xlit|abcdefghijklmnopqrstuvwxyz|abcdefghijklmnopqrstuvwxyz|"
- comment_format:
-   - "xlit|abcdefghijklmnopqrstuvwxyz|abcdefghijklmnopqrstuvwxyz|"
-  prefix: "R" # 反查引导符R
-  suffix: "'"
-  tips: "〔R模式輸入姓名〕"
-
 #tips: "〔V模式輸入。支持多种格式的数字(V123：一百二十三)、日期(v2016.8.8：2016年8月8日)、时间(v12:34：十二时三十四分)以及公式(V1+2：3)等的输入〕"
-
-# 增加八股文简化字语言模型，优化长句输入
-# grammar:
-#   language: zh-hans-t-essay-bgw  #自定义
 
 speller:
   alphabet: zyxwvutsrqponmlkjihgfedcba;+  # alphabet：设置本 speller 需要监听的键
@@ -378,7 +373,7 @@ recognizer:
     flypydz: "[a-z`]*`+[a-z`]*" #小鹤双拼反查
     Semi-EN: "^I.*$"
     luna_pinyin: "U[a-z]*'?$"
-    RenMing: "R[a-z]*'?$"
+    # RenMing: "R[a-z]*'?$"
     #uppercase: "[A-Z][-_+.'0-9A-Za-z]*$"
     uppercase: "" #中文状态大写锁定直接上屏
     url: "^(www[.]|https?:|ftp[.:]|mailto:|file:).*$|^[a-z]+[.].+$"
